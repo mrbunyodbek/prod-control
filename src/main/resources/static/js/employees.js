@@ -1,4 +1,4 @@
-var app = angular.module("productionControl", []);
+var app = angular.module('productionControl', []);
 
 app.controller('EmployeeController', function ($scope, $http) {
     // CRUD
@@ -18,7 +18,13 @@ app.controller('EmployeeController', function ($scope, $http) {
         });
     };
 
+    $scope.printVal = function () {
+        $scope.item = $scope.employee.experience;
+    };
+
     $scope.saveEmployee = function () {
+        console.log($scope.employee);
+
         $http({
             method: "POST",
             url: "/employees/save",
@@ -28,13 +34,12 @@ app.controller('EmployeeController', function ($scope, $http) {
         });
     };
 
-    $scope.deleteEmployee = function ($res) {
+    $scope.deleteEmployee = function ($id) {
         $http({
-            method: "POST",
-            url: "/employees/delete",
-            data: $res
+            method: "GET",
+            url: "/employees/delete" + $id,
         }).then(function (response) {
             $scope.employees = response.data;
         });
     };
-});
+    });
