@@ -1,21 +1,20 @@
 package uz.pc.db.entities;
 
+import com.sun.istack.internal.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
 import uz.pc.db.entities.base.UpdateBaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "db_products")
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product extends UpdateBaseEntity {
