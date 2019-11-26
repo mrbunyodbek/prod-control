@@ -2,8 +2,8 @@ package uz.pc.db.entities.base;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+//import org.springframework.data.annotation.CreatedDate;
+//import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -18,11 +18,11 @@ import java.util.Objects;
 public abstract class UpdateBaseEntity extends BaseEntity {
 
     @Column(name = "created_at", updatable = false)
-    @CreatedDate
+//    @CreatedDate
     private Date createdAt = new Date();
 
     @Column(name = "updated_at")
-    @LastModifiedDate
+//    @LastModifiedDate
     private Date updatedAt;
 
     @PrePersist

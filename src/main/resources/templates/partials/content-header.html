@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="section__content-header">
+    <section class="content-header">
+        <h1>
+            <span th:text="${contentHeader}"></span>
+            <small th:text="${contentDescription}"></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Blank page</li>
+        </ol>
+    </section>
+</div>
+</body>
+</html>
