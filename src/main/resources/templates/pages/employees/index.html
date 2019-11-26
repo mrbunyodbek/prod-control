@@ -11,14 +11,14 @@
     <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/AdminLTE.min.css}">
     <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/skins/skin-blue.min.css}">
 </head>
-<body class="skin-blue sidebar-mini" style="height: auto; min-height: 100%;">
+<body ng-app="productionControl" class="skin-blue sidebar-mini" style="height: auto; min-height: 100%;">
 <div th:insert="~{partials/header :: section__header}"></div>
 <div th:insert="~{partials/sidebar :: section__sidebar}"></div>
 
 <div class="content-wrapper" style="min-height: 1135.8px;">
     <div th:insert="~{partials/content-header :: section__content-header}"></div>
     <!-- Main content -->
-    <section class="content">
+    <section class="content" ng-controller="EmployeeController">
 
         <div class="box">
             <div class="box-header">
@@ -30,11 +30,61 @@
             </div>
             <div class="box-footer">
 
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                    Create new employee
+                </button>
             </div>
         </div>
 
     </section>
     <!-- /.content -->
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form role="form" ng-submit="saveEmployee()">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Employee</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="firstName" class="control-label">First name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="First name" ng-model="employee.firstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="secondName" class="control-label">Second name</label>
+                        <input type="text" class="form-control" id="secondName" placeholder="Second name" ng-model="employee.secondName">
+                    </div>
+                    <div class="form-group">
+                        <label for="experience" class="control-label">Experience</label>
+                        <select name="experience" id="experience" class="form-control" ng-model="employee.experience">
+                            <option value="0">-- Select employee experience --</option>
+                            <option value="0,1">1</option>
+                            <option value="0,2">2</option>
+                            <option value="0,3">3</option>
+                            <option value="0,4">4</option>
+                            <option value="0,5">5</option>
+                            <option value="0,6">6</option>
+                            <option value="0,7">7</option>
+                            <option value="0,8">8</option>
+                            <option value="0,9">9</option>
+                            <option value="1,0">10</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div th:insert="~{partials/footer :: section__footer}"></div>

@@ -25,7 +25,7 @@ public class MainController {
      */
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ModelAndView actionProductsIndex() {
-        view.setViewName("pages/products/index");
+        view = new ModelAndView("pages/products/index");
         return view;
     }
 
@@ -34,7 +34,13 @@ public class MainController {
      */
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
     public ModelAndView actionEmployeesIndex() {
-        view.setViewName("pages/employees/index");
+        view = new ModelAndView("pages/employees/index");
+        return view;
+    }
+
+    @RequestMapping(value = "/employees/create", method = RequestMethod.GET)
+    public ModelAndView actionEmployeesCreate() {
+        view.setViewName("pages/employees/create");
         return view;
     }
 
