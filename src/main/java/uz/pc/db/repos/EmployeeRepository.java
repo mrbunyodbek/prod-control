@@ -5,6 +5,6 @@ import uz.pc.db.entities.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
-    Employee findById(long id);
+    Employee findById(int id);
 
 }

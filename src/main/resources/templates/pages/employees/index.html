@@ -11,7 +11,7 @@
     <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/AdminLTE.min.css}">
     <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/skins/skin-blue.min.css}">
 </head>
-<body ng-app="productionControl" class="skin-blue sidebar-mini" style="height: auto; min-height: 100%;">
+<body ng-app="productionEmpControl" class="skin-blue sidebar-mini" style="height: auto; min-height: 100%;">
 
 <div th:insert="~{partials/header :: section__header}"></div>
 <div th:insert="~{partials/sidebar :: section__sidebar}"></div>
@@ -67,42 +67,41 @@
         <!-- /.content -->
     </div>
 </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" ng-controller="EmployeeController">
-                <form role="form">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Employee</h4>
-                    </div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
 
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="firstName" class="control-label">First name</label>
-                            <input name="firstName" type="text" class="form-control" id="firstName" placeholder="First name" ng-model="employee.firstName">
-                        </div>
-                        <div class="form-group">
-                            <label for="secondName" class="control-label">Second name</label>
-                            <input name="secondName" type="text" class="form-control" id="secondName" placeholder="Second name" ng-model="employee.secondName">
-                        </div>
-                        <div class="form-group">
-                            <label for="experience" class="control-label">Experience</label>
-                            <input type="range" min="0" max="1" step="0.1" name="experience" class="form-control" id="experience" ng-model="employee.experience" ng-change="printVal()">
-                            <p>{{item}}</p>
-                        </div>
+        <div class="modal-content" ng-controller="EmployeeController">
+            <form role="form">
 
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Employee</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="firstName" class="control-label">First name</label>
+                        <input name="firstName" type="text" class="form-control" id="firstName" placeholder="First name" ng-model="employee.firstName">
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" ng-click="saveEmployee()" name="submit" class="btn btn-primary" data-dismiss="modal" value="Save">
+                    <div class="form-group">
+                        <label for="secondName" class="control-label">Second name</label>
+                        <input name="secondName" type="text" class="form-control" id="secondName" placeholder="Second name" ng-model="employee.secondName">
                     </div>
-                </form>
-            </div>
+                    <div class="form-group">
+                        <label for="experience" class="control-label">Experience</label>
+                        <input type="range" min="0" max="1" step="0.1" name="experience" class="form-control" id="experience" ng-model="employee.experience" ng-change="printVal()">
+                        <p>{{item}}</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" ng-click="saveEmployee()" name="submit" class="btn btn-primary" data-dismiss="modal" value="Save">
+                </div>
+            </form>
         </div>
     </div>
-<!--</div>-->
-
+</div>
 <div th:insert="~{partials/footer :: section__footer}"></div>
 <div th:insert="~{partials/scripts :: section__scripts}"></div>
 </body>

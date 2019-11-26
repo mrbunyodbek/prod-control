@@ -5,6 +5,6 @@ import uz.pc.db.entities.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    Product findById(long id);
+    Product findById(int id);
 
 }

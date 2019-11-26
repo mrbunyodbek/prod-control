@@ -9,30 +9,22 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+//    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     @Override
     public String toString() {
         return "[ id=" + getId() + "]";
-    }
-
-    public boolean isNew() {
-        return getId() == null;
-    }
-
-    public String elsId() {
-        return getId().toString();
     }
 }
