@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/bootstrap/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/Ionicons/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/AdminLTE.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/skins/skin-blue.min.css}">
+</head>
+<body ng-app="productionControl" class="skin-blue sidebar-mini" style="height: auto; min-height: 100%;">
+
+<div th:insert="~{partials/header :: section__header}"></div>
+<div th:insert="~{partials/sidebar :: section__sidebar}"></div>
+
+<div ng-controller="RegisterProduction">
+    <div class="content-wrapper" style="min-height: 1135.8px;">
+        <div th:insert="~{partials/content-header :: section__content-header}"></div>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Make new production</h3>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="date">Date</label>
+                                        <input type="date" class="form-control" id="date" ng-model="date">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="reference">No.</label>
+                                        <input type="text" class="form-control" id="reference" ng-model="reference">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="product">Select product</label>
+                                        <select id="product" ng-options="prod as prod.name for prod in products track by prod.id" ng-model="product" class="form-control" ng-change="setTotalCostToNull()"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="cost" class="control-label">Price</label>
+                                        <div class="input-group">
+                                            <input type="number" name="price" class="form-control" id="price" ng-model="price" ng-value="product.rate" disabled>
+                                            <span class="input-group-addon">/ {{ product.measurement }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="amount" class="control-label">Amount</label>
+                                        <input type="number" name="amount" step="0.1" min="0.1" class="form-control" id="amount" ng-model="amount" ng-change="calcTotalCost()">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="cost" class="control-label">Cost</label>
+                                        <input type="number" name="cost" class="form-control" id="cost" ng-model="cost" ng-value="cost" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <h3>Process performers</h3>
+
+                            <table class="table table-bordered table-hover">
+                                <tbody><tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Worker</th>
+                                    <th style="max-width: 10rem;">Experience</th>
+                                    <th>Work hours</th>
+                                    <th>Salary</th>
+                                </tr>
+                                <tr ng-repeat="perf in performerList track by $index">
+                                    <td>{{ perf.tableId }}</td>
+                                    <td>
+                                        <select
+                                                id="employee"
+                                                ng-options="employee as employee.firstName for employee in employees track by employee.id"
+                                                ng-model="employee"
+                                                class="form-control"
+                                                ng-change="addNewRow(employee, workedHours)"
+                                        ></select>
+                                    </td>
+                                    <td>
+                                        <input
+                                                type="number"
+                                                name="experience"
+                                                class="form-control"
+                                                id="experience"
+                                                ng-model="perf.experience"
+                                                ng-value="employee.experience"
+                                                disabled>
+                                    </td>
+                                    <td><input type="number" step="0.1" min="0.1" max="1" class="form-control" id="workedHours" ng-model="perf.workedHours" ng-init="workedHours=1" ng-change="calculateSalaryForOne()"></td>
+                                    <td><input type="number" class="form-control" id="salary" ng-model="perf.salary" ng-value="perf.salary" disabled></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="number" name="overallSalary" class="form-control" ng-model="overallSalary" ng-value="overallSalary" disabled></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" ng-click="saveProduction()">
+                                Save production
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+</div>
+<div th:insert="~{partials/footer :: section__footer}"></div>
+<div th:insert="~{partials/scripts :: section__scripts}"></div>
+</body>
+</html>

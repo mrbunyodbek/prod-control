@@ -1,0 +1,5 @@
+INSERT INTO public.db_products (id, created_at, updated_at, product_desc, measurement, product_name, product_rate) VALUES (1, null, '2019-12-10 18:44:11.882000', '', 'kg', 'Keks', 1200);
+INSERT INTO public.db_products (id, created_at, updated_at, product_desc, measurement, product_name, product_rate) VALUES (2, null, '2019-12-10 18:44:27.483000', '', 'kg', 'Ragali', 2000);
+INSERT INTO public.db_products (id, created_at, updated_at, product_desc, measurement, product_name, product_rate) VALUES (3, null, '2019-12-10 18:44:46.387000', '', 'kg', 'Snikers', 2000);
+INSERT INTO public.db_products (id, created_at, updated_at, product_desc, measurement, product_name, product_rate) VALUES (4, '2019-12-10 18:44:59.290000', null, null, 'kg', 'Rulet', 2000);
+INSERT INTO public.db_products (id, created_at, updated_at, product_desc, measurement, product_name, product_rate) VALUES (5, '2019-12-10 18:45:13.136000', null, null, 'kg', 'Frutto', 1500);

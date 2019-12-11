@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/bootstrap/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/Ionicons/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/AdminLTE.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/skins/skin-blue.min.css}">
+</head>
+<body ng-app="productionSalaryControl" class="skin-blue fixed sidebar-mini" style="height: auto; min-height: 100%;">
+
+<div class="wrapper">
+
+    <div th:insert="~{partials/header :: section__header}"></div>
+    <div th:insert="~{partials/sidebar :: section__sidebar}"></div>
+
+    <div class="content-wrapper">
+        <div th:insert="~{partials/content-header :: section__content-header}"></div>
+        <!-- Main content -->
+        <section class="content" ng-controller="SalaryController">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-success box-solid">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Filter by date</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-5 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="start">Date</label>
+                                        <input type="date" class="form-control" id="start" ng-model="start">
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="end">Date</label>
+                                        <input type="date" class="form-control" id="end" ng-model="end">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-xs-5">
+                                    <button class="btn btn-success" ng-click="sendQueryForFilter()">Filter data</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-success box-solid">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Search</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <input type="text" class="form-control" ng-model="searchItem">
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-solid">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Salaries by Employee</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table class="table table-condensed table-hover">
+                                <thead>
+                                <tr>
+                                    <td></td>
+                                    <td>Production date</td>
+                                    <td>Reference number</td>
+                                    <td>Worked hours</td>
+                                    <td>Salary</td>
+                                </tr>
+                                </thead>
+                                <tbody ng-repeat="item in collection | filter : searchItem"
+                                       ng-controller="RowController"
+                                       ng-click="toggleRow()"
+                                       ng-switch on="isSelected()">
+                                <tr>
+                                    <td><br>{{ item.employee.id }}</br></td>
+                                    <td><br>{{ item.employee.firstName }} {{ item.employee.secondName }}</br></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><br>{{ item.overallSalary }}</br></td>
+                                </tr>
+                                <tr ng-switch-when="true" ng-repeat="p in item.details">
+                                    <td></td>
+                                    <td ng-value="p.productionDate.substring(0, 10)">{{ p.productionDate.substring(0, 10); }}</td>
+                                    <td>{{ p.productionReference }}</td>
+                                    <td>{{ p.workedHours }}</td>
+                                    <td>{{ p.salary }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!--</div>-->
+
+    <div th:insert="~{partials/footer :: section__footer}"></div>
+</div>
+<div th:insert="~{partials/scripts :: section__scripts}"></div>
+</body>
+</html>

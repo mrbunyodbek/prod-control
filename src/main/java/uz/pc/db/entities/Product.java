@@ -1,15 +1,13 @@
 package uz.pc.db.entities;
 
-import com.sun.istack.internal.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 import uz.pc.db.entities.base.UpdateBaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "db_products")
@@ -27,6 +25,9 @@ public class Product extends UpdateBaseEntity {
     private String description;
 
     @Column(name = "product_rate")
-    private Double rate;
+    private double rate;
+
+    @Column(name = "measurement")
+    private String measurement;
 
 }

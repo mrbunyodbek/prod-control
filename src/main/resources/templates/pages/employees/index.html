@@ -11,98 +11,249 @@
     <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/AdminLTE.min.css}">
     <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/skins/skin-blue.min.css}">
 </head>
-<body ng-app="productionEmpControl" class="skin-blue sidebar-mini" style="height: auto; min-height: 100%;">
+<body ng-app="productionEmpControl" class="skin-blue fixed sidebar-mini" style="height: auto; min-height: 100%;">
 
 <div th:insert="~{partials/header :: section__header}"></div>
 <div th:insert="~{partials/sidebar :: section__sidebar}"></div>
 
-<div ng-controller="EmployeeController">
-    <div class="content-wrapper" style="min-height: 1135.8px;">
+    <div class="content-wrapper" ng-controller="EmployeeController">
         <div th:insert="~{partials/content-header :: section__content-header}"></div>
         <!-- Main content -->
         <section class="content">
 
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">All employees</h3>
-                </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-success box-solid collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Search</h3>
 
-                <div class="box-body table-responsive no-padding">
-                    <table class="table">
-                        <tr>
-                            <th>ID</th>
-                            <th>First name</th>
-                            <th>Second name</th>
-                            <th>Experience</th>
-                            <th>Actions</th>
-                        </tr>
-                        <tr ng-repeat="res in employees">
-                            <td>{{ res.id }}</td>
-                            <td>{{ res.firstName }}</td>
-                            <td>{{ res.secondName }}</td>
-                            <td>{{ res.experience }}</td>
-                            <td>
-                                <div class="btn-group">
-                                    <a ng-click="getEmployee(res.id)" class="btn btn-info">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a ng-click="deleteEmployee(res.id)" class="btn btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="box-footer">
-
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                        Create new employee
-                    </button>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <input type="text" class="form-control" ng-model="searchItem">
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-md-8 col-xs-12">
+                    <div class="box box-success box-solid">
+                        <div class="box-header">
+                            <h3 class="box-title">All employees</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First name</th>
+                                    <th>Second name</th>
+                                    <th>Experience</th>
+                                    <th>Actions</th>
+                                </tr>
+                                <tr ng-repeat="res in employees | filter : searchItem">
+                                    <td>{{ res.id }}</td>
+                                    <td>{{ res.firstName }}</td>
+                                    <td>{{ res.secondName }}</td>
+                                    <td>{{ res.experience }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a ng-click="openModal(res.id)" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a ng-click="deleteEmployee(res.id)" class="btn btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="box-footer">
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" ng-click="openModal(-1)" data-toggle="modal" data-target="#myModal">
+                                Create new employee
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="box box-danger">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Employees by xps</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <canvas id="pieChart" style="height: 255px; width: 510px;" height="255" width="510"></canvas>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+
+
         </section>
         <!-- /.content -->
-    </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
 
-        <div class="modal-content" ng-controller="EmployeeController">
-            <form role="form">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="EmployeeModalController">
+            <div class="modal-dialog" role="document">
 
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Employee</h4>
-                </div>
+                <div class="modal-content">
+                    <form role="form">
 
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="firstName" class="control-label">First name</label>
-                        <input name="firstName" type="text" class="form-control" id="firstName" placeholder="First name" ng-model="employee.firstName">
-                    </div>
-                    <div class="form-group">
-                        <label for="secondName" class="control-label">Second name</label>
-                        <input name="secondName" type="text" class="form-control" id="secondName" placeholder="Second name" ng-model="employee.secondName">
-                    </div>
-                    <div class="form-group">
-                        <label for="experience" class="control-label">Experience</label>
-                        <input type="range" min="0" max="1" step="0.1" name="experience" class="form-control" id="experience" ng-model="employee.experience" ng-change="printVal()">
-                        <p>{{item}}</p>
-                    </div>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Employee</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="firstName" class="control-label">First name</label>
+                                <input name="firstName" type="text" class="form-control" id="firstName" placeholder="First name" ng-model="employee.firstName" ng-value="employee.firstName">
+                            </div>
+                            <div class="form-group">
+                                <label for="secondName" class="control-label">Second name</label>
+                                <input name="secondName" type="text" class="form-control" id="secondName" placeholder="Second name" ng-model="employee.secondName" ng-value="employee.secondName">
+                            </div>
+                            <div class="form-group">
+                                <label for="experience" class="control-label">Experience</label>
+                                <input name="experience" type="range" min="0" max="1" step="0.1" class="form-control" id="experience" ng-model="employee.experience" ng-value="employee.experience" ng-change="printVal()">
+                                <p>{{item}}</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="group">Assign to a group (optional)</label>
+                                <select id="group" ng-options="+(group.id) as group.name for group in groups track by group.id" ng-model="employee.groupId" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                            <input type="submit" ng-click="saveEmployee()" name="submit" class="btn btn-primary" data-dismiss="modal" value="Save">
+                            <!--                        <input type="submit" ng-click="editEmployee()" name="submit" class="btn btn-primary" data-dismiss="modal" value="Update">-->
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" ng-click="saveEmployee()" name="submit" class="btn btn-primary" data-dismiss="modal" value="Save">
-                </div>
-            </form>
+            </div>
         </div>
     </div>
-</div>
+<!--</div>-->
+<!--</div>-->
+
 <div th:insert="~{partials/footer :: section__footer}"></div>
 <div th:insert="~{partials/scripts :: section__scripts}"></div>
+
+<script>
+    var exps = [];
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            exps = this.responseText;
+        }
+    };
+    xhttp.open("GET", "/employees/get", true);
+    xhttp.send();
+
+    // $(document).ready(function(){
+    //     exps = $.get("/employees/get", function(data){
+    //     });
+    // });
+
+
+    console.log(exps);
+    //-------------
+    //- PIE CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
+    var pieChart       = new Chart(pieChartCanvas);
+    var PieData        = [
+        {
+            value    : 700,
+            color    : '#f56954',
+            highlight: '#f56954',
+            label    : 'Chrome'
+        },
+        {
+            value    : 500,
+            color    : '#00a65a',
+            highlight: '#00a65a',
+            label    : 'IE'
+        },
+        {
+            value    : 400,
+            color    : '#f39c12',
+            highlight: '#f39c12',
+            label    : 'FireFox'
+        },
+        {
+            value    : 600,
+            color    : '#00c0ef',
+            highlight: '#00c0ef',
+            label    : 'Safari'
+        },
+        {
+            value    : 300,
+            color    : '#3c8dbc',
+            highlight: '#3c8dbc',
+            label    : 'Opera'
+        },
+        {
+            value    : 100,
+            color    : '#d2d6de',
+            highlight: '#d2d6de',
+            label    : 'Navigator'
+        }
+    ];
+    var pieOptions     = {
+        //Boolean - Whether we should show a stroke on each segment
+        segmentShowStroke    : true,
+        //String - The colour of each segment stroke
+        segmentStrokeColor   : '#fff',
+        //Number - The width of each segment stroke
+        segmentStrokeWidth   : 2,
+        //Number - The percentage of the chart that we cut out of the middle
+        percentageInnerCutout: 50, // This is 0 for Pie charts
+        //Number - Amount of animation steps
+        animationSteps       : 100,
+        //String - Animation easing effect
+        animationEasing      : 'easeOutBounce',
+        //Boolean - Whether we animate the rotation of the Doughnut
+        animateRotate        : true,
+        //Boolean - Whether we animate scaling the Doughnut from the centre
+        animateScale         : false,
+        //Boolean - whether to make the chart responsive to window resizing
+        responsive           : true,
+        // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+        maintainAspectRatio  : true,
+        //String - A legend template
+        legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+    };
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    pieChart.Doughnut(PieData, pieOptions)
+
+</script>
+
 </body>
 </html>

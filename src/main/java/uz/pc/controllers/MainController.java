@@ -37,9 +37,36 @@ public class MainController {
         return view;
     }
 
-    @RequestMapping(value = "/employees/create", method = RequestMethod.GET)
-    public ModelAndView actionEmployeesCreate() {
-        view.setViewName("pages/employees/create");
+    /*
+     * Pages for Production
+     */
+    @RequestMapping(value = "/production", method = RequestMethod.GET)
+    public ModelAndView actionProductionIndex() {
+        view = new ModelAndView("pages/production/index");
+        return view;
+    }
+
+    @RequestMapping(value = "/production/add-new", method = RequestMethod.GET)
+    public ModelAndView actionProductionRegister() {
+        view = new ModelAndView("pages/production/register");
+        return view;
+    }
+
+    /*
+     * Pages for salaries
+     */
+    @RequestMapping(value = "/salaries", method = RequestMethod.GET)
+    public ModelAndView actionSalariesIndex() {
+        view = new ModelAndView("pages/salaries/index");
+        return view;
+    }
+
+    /*
+     * Pages for groups
+     */
+    @RequestMapping(value = "/groups", method = RequestMethod.GET)
+    public ModelAndView actionGroupsIndex() {
+        view = new ModelAndView("pages/groups/index");
         return view;
     }
 

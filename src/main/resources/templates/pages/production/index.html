@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/bootstrap/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/Ionicons/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/AdminLTE.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/skins/skin-blue.min.css}">
+
+</head>
+<body ng-app="productionControl" class="skin-blue sidebar-mini" style="height: auto; min-height: 100%;">
+
+<div th:insert="~{partials/header :: section__header}"></div>
+<div th:insert="~{partials/sidebar :: section__sidebar}"></div>
+
+<div ng-controller="ProductionIndexController">
+    <div class="content-wrapper" style="min-height: 1135.8px;">
+        <div th:insert="~{partials/content-header :: section__content-header}"></div>
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12 col xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Legend for Employee experiences</h3>
+                        </div>
+
+                        <div class="box-body">
+                            <p class="text-center">
+                                <span class="badge bg-aqua hov">0.1</span>
+                                <span class="badge bg-blue hov">0.2</span>
+                                <span class="badge bg-teal hov">0.3</span>
+                                <span class="badge bg-lime hov">0.4</span>
+                                <span class="badge bg-green hov">0.5</span>
+                                <span class="badge bg-olive hov">0.6</span>
+                                <span class="badge bg-yellow hov">0.7</span>
+                                <span class="badge bg-orange hov">0.8</span>
+                                <span class="badge bg-red hov">0.9</span>
+                                <span class="badge bg-maroon hov">1</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">All produced products</h3>
+                        </div>
+
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Reference number</th>
+                                    <th>Product name</th>
+                                    <th>Measurement</th>
+                                    <th>Product rate</th>
+                                    <th>Cost</th>
+                                    <th>Amount</th>
+                                    <th>Performers</th>
+                                    <th>Actions</th>
+                                </tr>
+                                <tr ng-repeat="res in production">
+                                    <td>{{ res.production.id }}</td>
+                                    <td>{{ res.production.date.substring(0, 10);}}</td>
+                                    <td>{{ res.production.reference }}</td>
+                                    <td>{{ res.product.name }}</td>
+                                    <td>{{ res.product.measurement }}</td>
+                                    <td>{{ res.product.rate }}</td>
+                                    <td>{{ res.production.cost }}</td>
+                                    <td>{{ res.production.amount }}</td>
+                                    <td>
+                                        <div ng-repeat="p in res.performerRows">
+                                            <span class="badge bg-aqua hov" ng-if="p.experience === 0.1">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-blue hov" ng-if="p.experience === 0.2">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-teal hov" ng-if="p.experience === 0.3">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-lime hov" ng-if="p.experience === 0.4">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-green hov" ng-if="p.experience === 0.5">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-olive hov" ng-if="p.experience === 0.6">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-yellow hov" ng-if="p.experience === 0.7">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-orange hov" ng-if="p.experience === 0.8">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-red hov" ng-if="p.experience === 0.9">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-maroon hov" ng-if="p.experience === 1">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+<!--                                            <a ng-click="getProduction(res.id)" class="btn btn-info">-->
+<!--                                                <i class="fa fa-edit"></i>-->
+<!--                                            </a>-->
+                                            <a ng-click="deleteProduction(res.production.id)" class="btn btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="box-footer">
+
+                            <!-- Button trigger modal -->
+                            <a type="button" class="btn btn-primary" href="/production/add-new">
+                                Register new production
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+</div>
+<div th:insert="~{partials/footer :: section__footer}"></div>
+<div th:insert="~{partials/scripts :: section__scripts}"></div>
+
+</body>
+</html>

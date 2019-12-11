@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 import uz.pc.db.entities.base.UpdateBaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -23,12 +22,15 @@ public class Employee extends UpdateBaseEntity {
     @Column(name = "first_name")
     private String firstName;
 
-    @NotNull
+    @Nullable
     @Column(name = "second_name")
     private String secondName;
 
-    @NotNull
+    @Nullable
     @Column(name = "experience")
-    private Double experience;
+    private double experience;
 
+    @Nullable
+    @Column(name = "group_id")
+    private int groupId = 0;
 }

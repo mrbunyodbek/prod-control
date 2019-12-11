@@ -4,13 +4,14 @@
 <div th:fragment="section__sidebar">
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar" style="height: auto; overflow: hidden; width: auto;">
+        <section class="sidebar">
             <!-- Sidebar user panel -->
             <div class="user-panel" style="min-height: 4rem;">
                 <div class="pull-left info">
                     <p sec:authentication="name"></p>
                 </div>
             </div>
+
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu tree" data-widget="tree">
                 <li class="header">MAIN NAVIGATION</li>
@@ -24,20 +25,32 @@
 
                 <li>
                     <a href="/products">
-                        <i class="fa fa-pencil-square-o"></i>
+                        <i class="fa fa-diamond"></i>
                         <span>All products</span>
                     </a>
                 </li>
                 <li>
                     <a href="/employees">
-                        <i class="fa fa-diamond"></i>
+                        <i class="fa fa-user"></i>
                         <span>Employees</span>
                     </a>
                 </li>
                 <li>
                     <a href="/production">
-                        <i class="fa fa-diamond"></i>
+                        <i class="fa fa-list-ol"></i>
                         <span>Production</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/salaries">
+                        <i class="fa fa-money"></i>
+                        <span>Salaries</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/groups">
+                        <i class="fa fa-group"></i>
+                        <span>Groups</span>
                     </a>
                 </li>
             </ul>

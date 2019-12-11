@@ -1,20 +1,34 @@
 package uz.pc.db.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import uz.pc.db.entities.base.UpdateBaseEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "production")
+@Table(name = "db_production")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Production extends UpdateBaseEntity {
 
+    @Column(name = "date")
     private Date date;
-    private String reference;
-    private Product product;
-    private Double amount;
-    private Double sum;
-    
 
+    @Column(name = "reference_number")
+    private String reference;
+
+    @Column(name = "amount")
+    private double amount;
+
+    @Column(name = "cost")
+    private double cost;
+
+    @Column(name = "product_id")
+    private int productId;
 }
