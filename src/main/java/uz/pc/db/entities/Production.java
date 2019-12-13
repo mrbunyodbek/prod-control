@@ -17,7 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Production extends UpdateBaseEntity {
 
-    @Column(name = "date")
+    @Column(name = "date", columnDefinition = "DATE")
     private Date date;
 
     @Column(name = "reference_number")

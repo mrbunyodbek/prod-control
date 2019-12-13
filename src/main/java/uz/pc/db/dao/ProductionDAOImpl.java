@@ -10,13 +10,12 @@ import uz.pc.db.entities.Production;
 import uz.pc.db.entities.Performer;
 import uz.pc.db.repos.ProductionRepository;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class ProductionDAOImpl implements ProductionDAO {
 
     private ProductionRepository repository;
@@ -45,8 +44,15 @@ public class ProductionDAOImpl implements ProductionDAO {
     }
 
     @Override
-    public Production getById(int id) {
-        return repository.getById(id);
+    public AllProduction getById(int id) {
+        Production production = repository.getById(id);
+        AllProduction one = new AllProduction();
+        one.setProduction(production);
+
+        one.setPerformerRows(performerDAO.collectPerformers(production.getId()));
+        one.setProduct(productDAO.getById(production.getProductId()));
+
+        return one;
     }
 
     /**
@@ -55,13 +61,6 @@ public class ProductionDAOImpl implements ProductionDAO {
      */
     @Override
     public void saveProduction(SavedProduction production) {
-
-        try {
-            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            production.getProduction().setDate(formatter.parse(formatter.format(production.getProduction().getDate())));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
         repository.save(production.getProduction());
         int id = repository.getByReference(production.getProduction().getReference()).getId();

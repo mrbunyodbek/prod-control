@@ -9,7 +9,7 @@ import java.util.List;
 public interface ProductionDAO {
 
     List<AllProduction> getAll();
-    Production getById(int id);
+    AllProduction getById(int id);
     void saveProduction(SavedProduction collection);
     void deleteProduction(int id);
 

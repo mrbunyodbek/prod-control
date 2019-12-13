@@ -1,7 +1,6 @@
 var app = angular.module("productionControl", []);
-var editable = {};
 
-app.controller('RegisterProduction', function ($scope, $window, $http) {
+app.controller('RegisterProduction', function ($scope, $window, $http, myService) {
 
     // Employee list that will be showed in frontend
     $scope.performerList = [];
@@ -26,6 +25,7 @@ app.controller('RegisterProduction', function ($scope, $window, $http) {
         $scope.prf = {
             "tableId": $scope.performerListId,
             "employee": null,
+            "experience": 0,
             "employeeId": 0,
             "workedHours": 1,
             "salary": 0
@@ -35,6 +35,7 @@ app.controller('RegisterProduction', function ($scope, $window, $http) {
 
     $scope.addNewRow = function ($employee, $wh) {
         $scope.performerList[$scope.performerListId-1].employee = $employee;
+        $scope.performerList[$scope.performerListId-1].experience = $employee.experience;
         $scope.performerList[$scope.performerListId-1].employeeId = $employee.id;
         $scope.performerList[$scope.performerListId-1].workedHours = $wh;
 
@@ -44,6 +45,7 @@ app.controller('RegisterProduction', function ($scope, $window, $http) {
         $scope.performer = {
             "tableId": $scope.performerListId,
             "employee": null,
+            "experience": 0,
             "employeeId": 0,
             "workedHours": 1,
             "salary": 0
@@ -59,7 +61,7 @@ app.controller('RegisterProduction', function ($scope, $window, $http) {
 
         for (let i = 0; i < $scope.performerList.length; i++) {
             if ($scope.performerList[i].employee === null) break;
-            $scope.overallWorkingHoursAndExps = $scope.overallWorkingHoursAndExps + ($scope.performerList[i].employee.experience * $scope.performerList[i].workedHours);
+            $scope.overallWorkingHoursAndExps = $scope.overallWorkingHoursAndExps + ($scope.performerList[i].experience * $scope.performerList[i].workedHours);
         }
 
         $scope.salaryPerHour = $scope.cost / $scope.overallWorkingHoursAndExps;
@@ -69,7 +71,7 @@ app.controller('RegisterProduction', function ($scope, $window, $http) {
 
             $scope.performerList[i].salary = $scope.salaryForOnePerson(
                 $scope.salaryPerHour,
-                $scope.performerList[i].employee.experience,
+                $scope.performerList[i].experience,
                 $scope.performerList[i].workedHours
             );
 
@@ -126,7 +128,7 @@ app.controller('RegisterProduction', function ($scope, $window, $http) {
     };
 });
 
-app.controller('ProductionIndexController', function ($scope, $window, $http) {
+app.controller('ProductionIndexController', function ($scope, $window, $http, myService) {
     //CRUD
     $http({
         method: "GET",
@@ -137,13 +139,9 @@ app.controller('ProductionIndexController', function ($scope, $window, $http) {
     });
 
     $scope.getProduction = function ($id) {
-        $http({
-            method: "POST",
-            url: "/production/get/" + $id
-        }).then(function (response) {
-            editable = response.data;
-            $window.location.href = '/production/add-new';
-        });
+        $window.location.href = '/production/add-new';
+        myService.set($id);
+
     };
 
     $scope.deleteProduction = function ($id) {
@@ -163,4 +161,20 @@ app.controller('ProductionIndexController', function ($scope, $window, $http) {
             $scope.production = response.data;
         });
     }
+});
+
+app.factory('myService', function() {
+    let savedData;
+    function set(data) {
+        savedData = data;
+    }
+    function get() {
+        return savedData;
+    }
+
+    return {
+        set: set,
+        get: get
+    }
+
 });

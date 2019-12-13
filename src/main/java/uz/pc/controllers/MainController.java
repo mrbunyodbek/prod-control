@@ -15,7 +15,7 @@ public class MainController {
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView actionIndex() {
-        view = new ModelAndView("dashboard");
+        view = new ModelAndView("pages/production/index");
         return view;
     }
 

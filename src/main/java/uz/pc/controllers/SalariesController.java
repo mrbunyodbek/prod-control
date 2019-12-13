@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import uz.pc.collections.Filter;
 import uz.pc.collections.SalaryCollection;
 import uz.pc.db.dao.interfaces.EmployeeDAO;
+import uz.pc.services.XLSHandlerService;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -25,6 +26,15 @@ public class SalariesController {
     @RequestMapping(value = "/filter", method = RequestMethod.POST)
     public ResponseEntity<List<SalaryCollection>> getFiltered(@Valid @RequestBody Filter filter) {
         return new ResponseEntity<>(dao.getAllForSalaries(filter), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/save-to-file", method = RequestMethod.POST)
+    public HttpStatus saveToFile(@Valid @RequestBody Filter filter) {
+        List<SalaryCollection> collection = dao.getAllForSalaries(filter);
+        XLSHandlerService xls = new XLSHandlerService(collection, filter.getStart(), filter.getEnd());
+
+        xls.writeDataToExcel();
+        return HttpStatus.OK;
     }
 
 }
