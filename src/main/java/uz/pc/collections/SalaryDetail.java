@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.pc.db.entities.Product;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -13,7 +13,7 @@ import java.util.Date;
 public class SalaryDetail {
 
     private int productionId;
-    private Date productionDate;
+    private LocalDateTime productionDate;
     private String productionReference;
     private Product product;
     private double workedHours;

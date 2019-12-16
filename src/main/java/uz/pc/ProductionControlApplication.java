@@ -12,6 +12,9 @@ public class ProductionControlApplication extends SpringBootServletInitializer {
 		SpringApplication.run(ProductionControlApplication.class, args);
 	}
 
+	/*
+	 * Method helps to build application in correct way with compiling its classes
+	 */
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(ProductionControlApplication.class);

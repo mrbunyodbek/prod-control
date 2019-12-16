@@ -8,7 +8,6 @@ import uz.pc.db.entities.base.UpdateBaseEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "db_production")
@@ -18,8 +17,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class Production extends UpdateBaseEntity {
 
-    @Column(name = "date", columnDefinition = "DATE")
-    private Date date;
+    @Column(name = "date")
+    private LocalDateTime date;
 
     @Column(name = "reference_number")
     private String reference;

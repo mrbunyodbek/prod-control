@@ -5,12 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.pc.collections.Filter;
 import uz.pc.collections.SalaryCollection;
-import uz.pc.collections.SalaryDetail;
 import uz.pc.db.dao.interfaces.EmployeeDAO;
 import uz.pc.services.XLSHandlerService;
 
 import javax.validation.Valid;
-import java.util.Date;
 import java.util.List;
 
 @RestController

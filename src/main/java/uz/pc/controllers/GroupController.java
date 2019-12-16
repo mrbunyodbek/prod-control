@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.pc.db.dao.interfaces.GroupDAO;
-import uz.pc.db.entities.Employee;
 import uz.pc.db.entities.Group;
 
 import javax.validation.Valid;

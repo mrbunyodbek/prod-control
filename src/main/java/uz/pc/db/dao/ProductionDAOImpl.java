@@ -61,6 +61,12 @@ public class ProductionDAOImpl implements ProductionDAO {
      */
     @Override
     public void saveProduction(SavedProduction production) {
+        production.getProduction().setDate(production.getProduction().getDate().withHour(15));
+        production.getProduction().setDate(production.getProduction().getDate().withMinute(0));
+        production.getProduction().setDate(production.getProduction().getDate().withSecond(0));
+        production.getProduction().setDate(production.getProduction().getDate().withNano(0));
+
+
         repository.save(production.getProduction());
         int id = repository.getByReference(production.getProduction().getReference()).getId();
 
