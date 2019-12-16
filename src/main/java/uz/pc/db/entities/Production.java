@@ -7,6 +7,7 @@ import lombok.Setter;
 import uz.pc.db.entities.base.UpdateBaseEntity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity

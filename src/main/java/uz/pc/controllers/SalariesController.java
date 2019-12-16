@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.pc.collections.Filter;
 import uz.pc.collections.SalaryCollection;
+import uz.pc.collections.SalaryDetail;
 import uz.pc.db.dao.interfaces.EmployeeDAO;
 import uz.pc.services.XLSHandlerService;
 
@@ -33,7 +34,16 @@ public class SalariesController {
         List<SalaryCollection> collection = dao.getAllForSalaries(filter);
         XLSHandlerService xls = new XLSHandlerService(collection, filter.getStart(), filter.getEnd());
 
-        xls.writeDataToExcel();
+        xls.createXls(true);
+        return HttpStatus.OK;
+    }
+
+    @RequestMapping(value = "/save-overall", method = RequestMethod.POST)
+    public HttpStatus saveOverallToFile(@Valid @RequestBody Filter filter) {
+        List<SalaryCollection> collection = dao.getAllForSalaries(filter);
+        XLSHandlerService xls = new XLSHandlerService(collection, filter.getStart(), filter.getEnd());
+
+        xls.createXls(false);
         return HttpStatus.OK;
     }
 

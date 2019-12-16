@@ -11,11 +11,10 @@ import uz.pc.db.entities.Performer;
 import uz.pc.db.entities.Production;
 import uz.pc.db.repos.EmployeeRepository;
 import uz.pc.db.repos.PerformerRepository;
+import uz.pc.db.repos.ProductRepository;
 import uz.pc.db.repos.ProductionRepository;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,16 +23,19 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     private EmployeeRepository repository;
     private PerformerRepository performerRepository;
     private ProductionRepository productionRepository;
+    private ProductRepository productRepository;
 
 
     @Autowired
     public EmployeeDAOImpl(
             EmployeeRepository repository,
             PerformerRepository performerRepository,
-            ProductionRepository productionRepository) {
+            ProductionRepository productionRepository,
+            ProductRepository productRepository) {
         this.repository = repository;
         this.performerRepository = performerRepository;
         this.productionRepository = productionRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -65,6 +67,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 detail.setProductionReference(production.getReference());
                 detail.setWorkedHours(performer.getWorkedHours());
                 detail.setSalary(performer.getSalary());
+                detail.setProduct(productRepository.findById(production.getProductId()));
 
                 salary.calcOverallSalary(performer.getSalary());
                 salary.setOneDetail(detail);

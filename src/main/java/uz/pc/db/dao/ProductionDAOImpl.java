@@ -61,7 +61,6 @@ public class ProductionDAOImpl implements ProductionDAO {
      */
     @Override
     public void saveProduction(SavedProduction production) {
-
         repository.save(production.getProduction());
         int id = repository.getByReference(production.getProduction().getReference()).getId();
 

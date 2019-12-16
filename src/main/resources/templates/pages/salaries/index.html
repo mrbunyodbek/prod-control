@@ -31,24 +31,18 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-5 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="start">Date</label>
-                                        <input type="date" class="form-control" id="start" ng-model="start">
-                                    </div>
-                                </div>
-                                <div class="col-md-5 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="end">Date</label>
-                                        <input type="date" class="form-control" id="end" ng-model="end">
-                                    </div>
-                                </div>
-                                <div class="col-md-2 col-xs-5">
-                                    <button class="btn btn-success" ng-click="sendQueryForFilter()">Filter data</button>
-                                    <button class="btn btn-success" ng-click="saveToFile()">Save filtered</button>
-                                </div>
+
+                            <div class="form-group">
+                                <label for="start">Date</label>
+                                <input type="date" class="form-control" id="start" ng-model="start">
                             </div>
+                            <div class="form-group">
+                                <label for="end">Date</label>
+                                <input type="date" class="form-control" id="end" ng-model="end">
+                            </div>
+                            <button class="btn btn-success" ng-click="sendQueryForFilter()">Filter data to the screen</button>
+                            <button class="btn btn-success" ng-click="saveToFile()">Save segmented data to XLS</button>
+                            <button class="btn btn-success" ng-click="saveOverallToFile()">Save overall data to XLS</button>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -107,7 +101,7 @@
                                 </tr>
                                 <tr ng-switch-when="true" ng-repeat="p in item.details">
                                     <td></td>
-                                    <td ng-value="p.productionDate.substring(0, 10)">{{ p.productionDate.substring(0, 10); }}</td>
+                                    <td>{{ p.productionDate }}</td>
                                     <td>{{ p.productionReference }}</td>
                                     <td>{{ p.workedHours }}</td>
                                     <td>{{ p.salary }}</td>

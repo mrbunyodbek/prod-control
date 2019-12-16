@@ -21,7 +21,6 @@ app.controller('SalaryController', function ($scope, $http) {
             for (let i = 0; i < response.data.length; i++) {
                 if (response.data[i].details.length > 0) {
                     $scope.collection.push(response.data[i]);
-                    console.log(response.data[i]);
                 }
             }
 
@@ -35,6 +34,19 @@ app.controller('SalaryController', function ($scope, $http) {
         $http({
             method: "POST",
             url: "/salaries/save-to-file",
+            data: $scope.filter
+        }).then(function (response) {
+
+        });
+    };
+
+    $scope.saveOverallToFile = function () {
+
+        $scope.filter.start = $scope.start;
+        $scope.filter.end = $scope.end;
+        $http({
+            method: "POST",
+            url: "/salaries/save-overall",
             data: $scope.filter
         }).then(function (response) {
 
