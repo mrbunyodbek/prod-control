@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/production")
-@CrossOrigin("http://localhost:3000")
 public class ProductionController {
 
     private ProductionDAO dao;
@@ -46,9 +45,9 @@ public class ProductionController {
      *
      * @return JSON of all two instances
      */
-    @RequestMapping(value = "/collect-data", method = RequestMethod.GET)
-    public ResponseEntity<DataCollection> collectInitialData() {
-        return new ResponseEntity<>(collect(), HttpStatus.OK);
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    public ResponseEntity<DataCollection> collectInitialData(@PathVariable int id) {
+        return new ResponseEntity<>(collect(id), HttpStatus.OK);
     }
 
     /**
@@ -84,14 +83,22 @@ public class ProductionController {
      *
      * @return Instance collection.
      */
-    private DataCollection collect() {
+    private DataCollection collect(int id) {
         DataCollection collection = new DataCollection();
+        AllProduction production;
 
         List<Product> prods = productDAO.getAll();
         List<Employee> emps = employeeDAO.getAll();
 
+        if (id == -1) {
+            production = null;
+        } else {
+            production = dao.getById(id);
+        }
+
         collection.setEmployees(emps);
         collection.setProducts(prods);
+        collection.setProduction(production);
 
         return collection;
     }

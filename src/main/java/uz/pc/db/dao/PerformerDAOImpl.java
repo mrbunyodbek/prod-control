@@ -36,11 +36,12 @@ public class PerformerDAOImpl implements PerformerDAO {
             PerformerRow row = new PerformerRow();
 
             row.setId(performer.getId());
-            row.setWorked(performer.getWorkedHours());
+            row.setWorkedHours(performer.getWorkedHours());
             row.setSalary(performer.getSalary());
+            row.setExperience(performer.getExperience());
 
             Employee emp = employeeRepository.findById(performer.getEmployeeId());
-            row.setExperience(emp.getExperience());
+            row.setEmployee(emp);
             row.setFirstName(emp.getFirstName());
             row.setSecondName(emp.getSecondName());
 
