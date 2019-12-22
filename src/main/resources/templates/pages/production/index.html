@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/bootstrap/dist/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/font-awesome/css/font-awesome.min.css}">
     <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/Ionicons/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/datatables.net-bs/css/dataTables.bootstrap.css}">
     <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/AdminLTE.min.css}">
     <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/skins/skin-blue.min.css}">
 
@@ -51,54 +52,72 @@
                         <h3 class="box-title">All produced products</h3>
                     </div>
 
-                    <div class="box-body table-responsive no-padding">
-                        <table class="table">
-                            <tr>
-                                <th>ID</th>
-                                <th>Date</th>
-                                <th>Reference number</th>
-                                <th>Product name</th>
-                                <th>Measurement</th>
-                                <th>Product rate</th>
-                                <th>Cost</th>
-                                <th>Amount</th>
-                                <th>Performers</th>
-                                <th>Actions</th>
-                            </tr>
-                            <tr ng-repeat="res in production">
-                                <td>{{ res.production.id }}</td>
-                                <td>{{ res.production.date.substring(0,10) }}</td>
-                                <td>{{ res.production.reference }}</td>
-                                <td>{{ res.product.name }}</td>
-                                <td>{{ res.product.measurement }}</td>
-                                <td>{{ res.product.rate }}</td>
-                                <td>{{ res.production.cost }}</td>
-                                <td>{{ res.production.amount }}</td>
-                                <td>
-                                    <div ng-repeat="p in res.performerRows">
-                                        <span class="badge bg-aqua hov" ng-if="p.employee.experience === 0.1">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
-                                        <span class="badge bg-blue hov" ng-if="p.employee.experience === 0.2">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
-                                        <span class="badge bg-teal hov" ng-if="p.employee.experience === 0.3">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
-                                        <span class="badge bg-lime hov" ng-if="p.employee.experience === 0.4">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
-                                        <span class="badge bg-green hov" ng-if="p.employee.experience === 0.5">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
-                                        <span class="badge bg-olive hov" ng-if="p.employee.experience === 0.6">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
-                                        <span class="badge bg-yellow hov" ng-if="p.employee.experience === 0.7">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
-                                        <span class="badge bg-orange hov" ng-if="p.employee.experience === 0.8">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
-                                        <span class="badge bg-red hov" ng-if="p.employee.experience === 0.9">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
-                                        <span class="badge bg-maroon hov" ng-if="p.employee.experience === 1">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a ng-click="openModal(res.production.id)" class="btn btn-info" data-toggle="modal" data-target="#myModal">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a ng-click="deleteProduction(res.production.id)" class="btn btn-danger">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                    <div class="box-body">
+                        <table id="example" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Reference number</th>
+                                    <th>Product name</th>
+                                    <th>Measurement</th>
+                                    <th>Product rate</th>
+                                    <th>Cost</th>
+                                    <th>Amount</th>
+                                    <th>Performers</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="res in production">
+                                    <td>{{ res.production.id }}</td>
+                                    <td>{{ res.production.date.substring(0,10) }}</td>
+                                    <td>{{ res.production.reference }}</td>
+                                    <td>{{ res.product.name }}</td>
+                                    <td>{{ res.product.measurement }}</td>
+                                    <td>{{ res.product.rate }}</td>
+                                    <td>{{ res.production.cost }}</td>
+                                    <td>{{ res.production.amount }}</td>
+                                    <td>
+                                        <div ng-repeat="p in res.performerRows">
+                                            <span class="badge bg-aqua hov" ng-if="p.employee.experience === 0.1">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-blue hov" ng-if="p.employee.experience === 0.2">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-teal hov" ng-if="p.employee.experience === 0.3">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-lime hov" ng-if="p.employee.experience === 0.4">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-green hov" ng-if="p.employee.experience === 0.5">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-olive hov" ng-if="p.employee.experience === 0.6">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-yellow hov" ng-if="p.employee.experience === 0.7">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-orange hov" ng-if="p.employee.experience === 0.8">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-red hov" ng-if="p.employee.experience === 0.9">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                            <span class="badge bg-maroon hov" ng-if="p.employee.experience === 1">{{ p.firstName }} {{ p.secondName }}, {{ p.salary }}<br></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a ng-click="openModal(res.production.id)" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a ng-click="deleteProduction(res.production.id)" class="btn btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Reference number</th>
+                                    <th>Product name</th>
+                                    <th>Measurement</th>
+                                    <th>Product rate</th>
+                                    <th>Cost</th>
+                                    <th>Amount</th>
+                                    <th>Performers</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <div class="box-footer">
@@ -223,6 +242,27 @@
 
 <div th:insert="~{partials/footer :: section__footer}"></div>
 <div th:insert="~{partials/scripts :: section__scripts}"></div>
+
+<script th:src="@{//webjars/AdminLTE/2.4.0/bower_components/datatables.net/js/jquery.dataTables.js}"></script>
+<script th:src="@{//webjars/AdminLTE/2.4.0/bower_components/datatables.net-bs/js/dataTables.bootstrap.js}"></script>
+<script th:src="@{//js/production.js}"></script>
+
+<script>
+
+    setTimeout(function(){
+        $(function () {
+            $('#example').DataTable({
+                'paging'      : true,
+                'lengthChange': true,
+                'searching'   : true,
+                'ordering'    : true,
+                'info'        : true,
+                'autoWidth'   : true
+            })
+        });
+    }, 2000);
+
+</script>
 
 </body>
 </html>
