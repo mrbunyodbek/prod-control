@@ -66,13 +66,11 @@ public class ProductionDAOImpl implements ProductionDAO {
         production.getProduction().setDate(production.getProduction().getDate().withSecond(0));
         production.getProduction().setDate(production.getProduction().getDate().withNano(0));
 
-
-        repository.save(production.getProduction());
-        int id = repository.getByReference(production.getProduction().getReference()).getId();
-
+        Production savedProd = repository.save(production.getProduction());
         List<Performer> performers = production.getPerformers();
+
         for (int i = 0; i < performers.size(); i++) {
-            performers.get(i).setProductionId(id);
+            performers.get(i).setProductionId(savedProd.getId());
             performers.get(i).setEmployeeId(production.getPerformers().get(i).getEmployeeId());
 
             performerDAO.savePerformer(performers.get(i));

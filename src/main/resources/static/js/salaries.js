@@ -2,6 +2,7 @@ var app = angular.module("productionSalaryControl", []);
 
 app.controller('SalaryController', function ($scope, $http) {
     $scope.collection = [];
+    $scope.overallMoney = 0;
     $scope.filter = {
         "start": null,
         "end": null
@@ -17,9 +18,11 @@ app.controller('SalaryController', function ($scope, $http) {
             url: "/salaries/filter",
             data: $scope.filter
         }).then(function (response) {
+            $scope.collection = [];
 
             for (let i = 0; i < response.data.length; i++) {
                 if (response.data[i].details.length > 0) {
+                    $scope.overallMoney += response.data[i].overallSalary;
                     $scope.collection.push(response.data[i]);
                 }
             }
@@ -54,7 +57,6 @@ app.controller('SalaryController', function ($scope, $http) {
     };
 
     $scope.getDate = function () {
-
         console.log($scope.date);
     }
 });

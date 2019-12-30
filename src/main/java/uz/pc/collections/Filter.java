@@ -3,13 +3,13 @@ package uz.pc.collections;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
 public class Filter {
 
-    Date start;
-    Date end;
+    LocalDateTime start;
+    LocalDateTime end;
 
 }

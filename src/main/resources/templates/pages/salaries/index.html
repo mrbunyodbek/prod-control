@@ -92,21 +92,30 @@
                                        ng-controller="RowController"
                                        ng-click="toggleRow()"
                                        ng-switch on="isSelected()">
-                                <tr>
-                                    <td><br>{{ item.employee.id }}</br></td>
-                                    <td><br>{{ item.employee.firstName }} {{ item.employee.secondName }}</br></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><br>{{ item.overallSalary }}</br></td>
-                                </tr>
-                                <tr ng-switch-when="true" ng-repeat="p in item.details">
-                                    <td></td>
-                                    <td>{{ p.productionDate }}</td>
-                                    <td>{{ p.productionReference }}</td>
-                                    <td>{{ p.workedHours }}</td>
-                                    <td>{{ p.salary }}</td>
-                                </tr>
+                                    <tr>
+                                        <td><br>{{ item.employee.id }}</br></td>
+                                        <td><br>{{ item.employee.firstName }} {{ item.employee.secondName }}</br></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><br>{{ item.overallSalary }}</br></td>
+                                    </tr>
+                                    <tr ng-switch-when="true" ng-repeat="p in item.details">
+                                        <td></td>
+                                        <td>{{ p.productionDate.substring(0,10) }}</td>
+                                        <td>{{ p.productionReference }}</td>
+                                        <td>{{ p.workedHours }}</td>
+                                        <td>{{ p.salary }}</td>
+                                    </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><b>OVERALL SALARY</b></td>
+                                        <td><input type="text" class="form-control" disabled ng-value="overallMoney"></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <!-- /.box-body -->

@@ -10,16 +10,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class XLSHandlerService {
 
     private List<SalaryCollection> collections;
-    private Date start;
-    private Date end;
+    private LocalDateTime start;
+    private LocalDateTime end;
 
-    public XLSHandlerService(List<SalaryCollection> collections, Date start, Date end) {
+    public XLSHandlerService(List<SalaryCollection> collections, LocalDateTime start, LocalDateTime end) {
         this.collections = collections;
         this.start = start;
         this.end = end;
@@ -74,12 +75,12 @@ public class XLSHandlerService {
             Cell headerSalaryKey = headerSalary.createCell(0);
             Cell headerSalaryVal = headerSalary.createCell(1);
 
-            headerCell.setCellValue(start + " - " + end + " kunlar ichida bajarilgan ishlar");
+            headerCell.setCellValue(formatDate(start) + " - " + formatDate(end) + " kunlar ichida bajarilgan ishlar");
             headerEmpKey.setCellValue("Tanlangan ishchi:");
             headerEmpVal.setCellValue(item.getEmployee().getFirstName() + " " + item.getEmployee().getSecondName());
 
             headerDatesKey.setCellValue("Tanlangan kunlar:");
-            headerDatesVal.setCellValue(start + " - " + end);
+            headerDatesVal.setCellValue(formatDate(start) + " - " + formatDate(end));
 
             headerSalaryKey.setCellValue("Jami:");
             headerSalaryVal.setCellValue(item.getOverallSalary());
@@ -101,7 +102,7 @@ public class XLSHandlerService {
                 reportDataRow = sheet.createRow(rowReportIterator);
 
                 reportDataCell = reportDataRow.createCell(0);
-                reportDataCell.setCellValue(detail.getProductionDate().toString().substring(0, 10));
+                reportDataCell.setCellValue(formatDate(detail.getProductionDate()));
 
                 reportDataCell = reportDataRow.createCell(1);
                 reportDataCell.setCellValue(detail.getProduct().getName());
@@ -174,7 +175,7 @@ public class XLSHandlerService {
                 reportDataRow = sheet.createRow(rowIterator);
 
                 controlData = reportDataRow.createCell(0);
-                controlData.setCellValue(detail.getProductionDate().toString().substring(0, 10));
+                controlData.setCellValue(formatDate(detail.getProductionDate()));
 
                 controlData = reportDataRow.createCell(1);
                 controlData.setCellValue(detail.getProductionReference());
@@ -213,5 +214,11 @@ public class XLSHandlerService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String formatDate(LocalDateTime time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyy");
+
+        return time.format(formatter);
     }
 }

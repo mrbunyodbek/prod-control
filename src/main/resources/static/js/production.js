@@ -48,7 +48,8 @@ app.controller('RegisterProduction', function ($scope, $window, $http, sharedPar
     };
 
     $scope.prf = {
-        "id": 1,
+        "listId": 1,
+        "id": null,
         "employee": null,
         "employeeId": 0,
         "experience": 0,
@@ -71,7 +72,8 @@ app.controller('RegisterProduction', function ($scope, $window, $http, sharedPar
 
                 for (let i = 0; i < response.data.production.performerRows.length; ++i) {
                     $scope.prf = {
-                        "id": 1,
+                        "listId": 1,
+                        "id": null,
                         "employee": null,
                         "employeeId": 0,
                         "experience": 0,
@@ -79,7 +81,8 @@ app.controller('RegisterProduction', function ($scope, $window, $http, sharedPar
                         "salary": 0
                     };
 
-                    $scope.prf.id = i + 1;
+                    $scope.prf.listId = i + 1;
+                    $scope.prf.id = response.data.production.performerRows[i].id;
                     $scope.prf.employee = response.data.production.performerRows[i].employee;
                     $scope.prf.employeeId = response.data.production.performerRows[i].employee.id;
                     $scope.prf.experience = response.data.production.performerRows[i].experience;
@@ -122,6 +125,7 @@ app.controller('RegisterProduction', function ($scope, $window, $http, sharedPar
         if ($scope.performerRows.length === 1) {
             $scope.performerRows[0].employee = $scope.employees.find(x => x.id === $scope.performerRows[0].employee);
             $scope.performerRows[0].employeeId = $scope.performerRows[0].employee.id;
+            $scope.performerRows[0].experience = $scope.performerRows[0].employee.experience;
 
             $scope.calculateSalaryForOne();
             $scope.addNewRow();
@@ -129,6 +133,7 @@ app.controller('RegisterProduction', function ($scope, $window, $http, sharedPar
         } else {
             $scope.performerRows[$id - 1].employee = $scope.employees.find(x => x.id === $scope.performerRows[$id - 1].employee);
             $scope.performerRows[$id - 1].employeeId = $scope.performerRows[$id - 1].employee.id;
+            $scope.performerRows[$id - 1].experience = $scope.performerRows[$id - 1].employee.experience;
 
             $scope.calculateSalaryForOne();
             if ($id === $scope.performerRows.length) {
@@ -139,7 +144,8 @@ app.controller('RegisterProduction', function ($scope, $window, $http, sharedPar
 
     $scope.addNewRow = function () {
         $scope.prf = {
-            "id": $scope.performerRows.length + 1,
+            "listId": $scope.performerRows.length + 1,
+            "id": null,
             "employee": null,
             "employeeId": 0,
             "experience": 1,
