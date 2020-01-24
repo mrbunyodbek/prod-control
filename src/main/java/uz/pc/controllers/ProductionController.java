@@ -4,7 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.pc.collections.DataCollection;
-import uz.pc.collections.AllProduction;
+import uz.pc.collections.PagedProduction;
+import uz.pc.collections.ProductionWithPerformers;
 import uz.pc.collections.SavedProduction;
 import uz.pc.db.dao.interfaces.EmployeeDAO;
 import uz.pc.db.dao.interfaces.ProductDAO;
@@ -36,8 +37,20 @@ public class ProductionController {
      * @return JSON list of all Productions.
      */
     @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public ResponseEntity<List<AllProduction>> getAll() {
+    public ResponseEntity<List<ProductionWithPerformers>> getAll() {
         return new ResponseEntity<>(dao.getAll(), HttpStatus.OK);
+    }
+
+    /**
+     * Get all Production instances from DB.
+     *
+     * @return JSON list of all Productions.
+     */
+    @RequestMapping(value = "/get/{pageNo}/{sizeOfThePage}/{sortingDirection}", method = RequestMethod.GET)
+    public ResponseEntity<PagedProduction> getPaginatedProductions(
+            @PathVariable int pageNo, @PathVariable int sizeOfThePage, @PathVariable boolean sortingDirection
+    ) {
+        return new ResponseEntity<>(dao.getPaginatedProductions(pageNo, sizeOfThePage, sortingDirection), HttpStatus.OK);
     }
 
     /**
@@ -85,7 +98,7 @@ public class ProductionController {
      */
     private DataCollection collect(int id) {
         DataCollection collection = new DataCollection();
-        AllProduction production;
+        ProductionWithPerformers production;
 
         List<Product> prods = productDAO.getAll();
         List<Employee> emps = employeeDAO.getAll();

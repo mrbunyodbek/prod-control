@@ -33,4 +33,9 @@ public class Employee extends UpdateBaseEntity {
     @Nullable
     @Column(name = "group_id")
     private int groupId = 0;
+
+    @Nullable
+    @Column(name = "card_id", unique = true)
+    private String cardId;
+
 }

@@ -14,10 +14,10 @@ import java.util.List;
 public class SalaryCollection {
 
     private Employee employee;
-    private List<SalaryDetail> details = new ArrayList<>();
+    private List<DetailedSalary> details = new ArrayList<>();
     private double overallSalary = 0;
 
-    public void setOneDetail(SalaryDetail detail) {
+    public void setOneDetail(DetailedSalary detail) {
         this.details.add(detail);
     }
 

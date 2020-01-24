@@ -1,15 +1,18 @@
 package uz.pc.db.dao.interfaces;
 
-import uz.pc.collections.AllProduction;
+import org.springframework.data.domain.Page;
+import uz.pc.collections.PagedProduction;
+import uz.pc.collections.ProductionWithPerformers;
 import uz.pc.collections.SavedProduction;
-import uz.pc.db.entities.Production;
 
 import java.util.List;
 
 public interface ProductionDAO {
 
-    List<AllProduction> getAll();
-    AllProduction getById(int id);
+    PagedProduction getPaginatedProductions(int pageNo, int sizeOfThePage, boolean sortingDirection);
+
+    List<ProductionWithPerformers> getAll();
+    ProductionWithPerformers getById(int id);
     void saveProduction(SavedProduction collection);
     void deleteProduction(int id);
 

@@ -15,6 +15,6 @@ public class DataCollection {
 
     private List<Employee> employees;
     private List<Product> products;
-    private AllProduction production;
+    private ProductionWithPerformers production;
 
 }

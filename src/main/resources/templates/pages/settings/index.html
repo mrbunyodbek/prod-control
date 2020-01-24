@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/bootstrap/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/Ionicons/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/AdminLTE.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/skins/skin-blue.min.css}">
+</head>
+<body ng-app="settingsControl" class="skin-blue sidebar-mini" style="height: auto; min-height: 100%;">
+
+<div th:insert="~{partials/header :: section__header}"></div>
+<div th:insert="~{partials/sidebar :: section__sidebar}"></div>
+
+<div ng-controller="SettingsController">
+    <div class="content-wrapper" style="min-height: 1135.8px;">
+        <div th:insert="~{partials/content-header :: section__content-header}"></div>
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Working hours</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form role="form">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="startOfDay">Start of the work</label>
+                            <input type="text" placeholder="HH:mm:ss" id="startOfDay" ng-model="settings.startOfDay" ng-value="settings.startOfDay" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="endOfDay">End of the work</label>
+                            <input type="text" placeholder="HH:mm:ss" id="endOfDay" ng-model="settings.endOfDay" ng-value="settings.endOfDay" class="form-control">
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary" ng-click="saveSettings()">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+</div>
+<div th:insert="~{partials/footer :: section__footer}"></div>
+<div th:insert="~{partials/scripts :: section__scripts}"></div>
+<script th:src="@{//js/jquery.mask.min.js}"></script>
+<script th:src="@{//js/settings.js}"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#startOfDay').mask('00:00:00');
+        $('#endOfDay').mask('00:00:00');
+    });
+</script>
+
+</body>
+</html>

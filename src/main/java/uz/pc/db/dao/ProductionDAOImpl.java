@@ -1,7 +1,11 @@
 package uz.pc.db.dao;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import uz.pc.collections.AllProduction;
+import uz.pc.collections.PagedProduction;
+import uz.pc.collections.ProductionWithPerformers;
 import uz.pc.collections.SavedProduction;
 import uz.pc.db.dao.interfaces.PerformerDAO;
 import uz.pc.db.dao.interfaces.ProductDAO;
@@ -29,11 +33,42 @@ public class ProductionDAOImpl implements ProductionDAO {
     }
 
     @Override
-    public List<AllProduction> getAll() {
-        List<AllProduction> collections = new ArrayList<>();
+    public PagedProduction getPaginatedProductions(int pageNo, int sizeOfThePage, boolean sortingDirection) {
+        List<ProductionWithPerformers> collection = new ArrayList<>();
+        Page<Production> pagedProductions;
+        if (sortingDirection) {
+            pagedProductions = repository.findAll(
+                    PageRequest.of(pageNo, sizeOfThePage, Sort.by(Sort.Direction.DESC, "id"))
+            );
+        } else {
+            pagedProductions = repository.findAll(
+                    PageRequest.of(pageNo, sizeOfThePage, Sort.by(Sort.Direction.ASC, "id"))
+            );
+        }
+
+        pagedProductions.forEach(production -> {
+            ProductionWithPerformers one = new ProductionWithPerformers();
+            one.setProduction(production);
+            one.setPerformerRows(performerDAO.collectPerformers(production.getId()));
+            one.setProduct(productDAO.getById(production.getProductId()));
+
+            collection.add(one);
+        });
+
+        PagedProduction pagedProduction = new PagedProduction();
+        pagedProduction.setPwp(collection);
+        pagedProduction.setCurrentPage(pagedProductions.getNumber());
+        pagedProduction.setCountOfItems(pagedProductions.getSize());
+        pagedProduction.setTotalPages(pagedProductions.getTotalPages());
+        return pagedProduction;
+    }
+
+    @Override
+    public List<ProductionWithPerformers> getAll() {
+        List<ProductionWithPerformers> collections = new ArrayList<>();
 
         for (Production production : repository.findAll()) {
-            AllProduction one = new AllProduction();
+            ProductionWithPerformers one = new ProductionWithPerformers();
             one.setProduction(production);
             one.setPerformerRows(performerDAO.collectPerformers(production.getId()));
             one.setProduct(productDAO.getById(production.getProductId()));
@@ -44,9 +79,9 @@ public class ProductionDAOImpl implements ProductionDAO {
     }
 
     @Override
-    public AllProduction getById(int id) {
+    public ProductionWithPerformers getById(int id) {
         Production production = repository.getById(id);
-        AllProduction one = new AllProduction();
+        ProductionWithPerformers one = new ProductionWithPerformers();
         one.setProduction(production);
 
         one.setPerformerRows(performerDAO.collectPerformers(production.getId()));

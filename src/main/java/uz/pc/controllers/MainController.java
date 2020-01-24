@@ -42,7 +42,7 @@ public class MainController {
      */
     @RequestMapping(value = "/production", method = RequestMethod.GET)
     public ModelAndView actionProductionIndex() {
-        view = new ModelAndView("pages/production/index");
+        view = new ModelAndView("pages/production/index_paginated");
         return view;
     }
 
@@ -67,6 +67,26 @@ public class MainController {
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public ModelAndView actionGroupsIndex() {
         view = new ModelAndView("pages/groups/index");
+        return view;
+    }
+
+
+    /*
+     * Pages for settings
+     */
+    @RequestMapping(value = "/settings", method = RequestMethod.GET)
+    public ModelAndView actionSettingsIndex() {
+        view = new ModelAndView("pages/settings/index");
+        return view;
+    }
+
+
+    /*
+     * Pages for attendance
+     */
+    @RequestMapping(value = "/attendance", method = RequestMethod.GET)
+    public ModelAndView actionAttendanceIndex() {
+        view = new ModelAndView("pages/attendance/index");
         return view;
     }
 

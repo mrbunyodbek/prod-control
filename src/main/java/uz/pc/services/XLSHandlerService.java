@@ -4,7 +4,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import uz.pc.collections.SalaryCollection;
-import uz.pc.collections.SalaryDetail;
+import uz.pc.collections.DetailedSalary;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -98,7 +98,7 @@ public class XLSHandlerService {
             int rowReportIterator = 6;
             Row reportDataRow;
             Cell reportDataCell;
-            for (SalaryDetail detail : item.getDetails()) {
+            for (DetailedSalary detail : item.getDetails()) {
                 reportDataRow = sheet.createRow(rowReportIterator);
 
                 reportDataCell = reportDataRow.createCell(0);
@@ -170,7 +170,7 @@ public class XLSHandlerService {
             ++rowIterator;
             groupStart = rowIterator;
 
-            for (SalaryDetail detail : item.getDetails()) {
+            for (DetailedSalary detail : item.getDetails()) {
 
                 reportDataRow = sheet.createRow(rowIterator);
 

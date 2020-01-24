@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AllProduction {
+public class ProductionWithPerformers {
 
     private Production production;
     private Product product;

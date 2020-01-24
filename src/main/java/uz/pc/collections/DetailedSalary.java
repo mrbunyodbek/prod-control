@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SalaryDetail {
+public class DetailedSalary {
 
     private int productionId;
     private LocalDateTime productionDate;

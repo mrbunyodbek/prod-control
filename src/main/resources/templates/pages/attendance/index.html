@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/bootstrap/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/Ionicons/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/AdminLTE.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/skins/skin-blue.min.css}">
+</head>
+<body ng-app="productionAttendanceControl" class="skin-blue fixed sidebar-mini" style="height: auto; min-height: 100%;">
+
+<div class="wrapper">
+
+    <div th:insert="~{partials/header :: section__header}"></div>
+    <div th:insert="~{partials/sidebar :: section__sidebar}"></div>
+
+    <div class="content-wrapper">
+        <div th:insert="~{partials/content-header :: section__content-header}"></div>
+        <!-- Main content -->
+        <section class="content" ng-controller="AttendanceController">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-success box-solid">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Choose</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="input-group input-group-lg">
+                                <input type="text" class="form-control">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-info btn-flat">Get</button>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-solid">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Salaries by Employee</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table class="table table-condensed table-hover">
+                                <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Arrival time</td>
+                                    <td>Arrival Date</td>
+                                    <td>Late/Early coming</td>
+                                    <td>Working day</td>
+                                    <td>Worked hours</td>
+                                    <td>Departure time</td>
+                                    <td>Departure date</td>
+                                    <td>Late/Early go</td>
+                                </tr>
+                                </thead>
+                                <tbody ng-repeat="item in collection | filter : searchItem"
+                                       ng-controller="RowController"
+                                       ng-click="toggleRow()"
+                                       ng-switch on="isSelected()">
+                                <tr>
+                                    <td><br>{{ item.employee.id }}</br></td>
+                                    <td><br>{{ item.employee.firstName }} {{ item.employee.secondName }}</br></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr ng-switch-when="true" ng-repeat="p in item.attendanceList">
+                                    <td></td>
+                                    <td>{{ p.arrivalTime }}</td>
+                                    <td>{{ p.arrivalDate }}</td>
+                                    <td>{{ p.arrivalDifference }}</td>
+                                    <td>{{ p.weekday }}</td>
+                                    <td></td>
+                                    <td>{{ p.departureTime }}</td>
+                                    <td>{{ p.departureDate }}</td>
+                                    <td>{{ p.departureDifference }}</td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td>Arrival time</td>
+                                    <td>Arrival Date</td>
+                                    <td>Late/Early coming</td>
+                                    <td>Working day</td>
+                                    <td>Worked hours</td>
+                                    <td>Departure time</td>
+                                    <td>Departure date</td>
+                                    <td>Late/Early go</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!--</div>-->
+
+    <div th:insert="~{partials/footer :: section__footer}"></div>
+</div>
+<div th:insert="~{partials/scripts :: section__scripts}"></div>
+
+<script th:src="@{//js/attendance.js}"></script>
+</body>
+</html>
