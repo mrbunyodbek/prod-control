@@ -3,41 +3,33 @@ var app = angular.module("productionAttendanceControl", []);
 app.controller('AttendanceController', function ($scope, $http) {
     $scope.collection = [];
 
+    const date = new Date();
+    const month = date.toLocaleString('default', { month: 'long' });
+
     $http({
         method: "GET",
-        url: "/attendance/get",
-        data: $scope.filter
+        url: "/attendance/get/" + month
     }).then(function (response) {
+        $scope.collection = [];
+        $scope.createDaysForTable();
         $scope.collection = response.data;
-        console.log($scope.collection);
     });
 
-    // $scope.sendQueryForFilter = function () {
-    //
-    //     $scope.filter.start = $scope.start;
-    //     $scope.filter.end = $scope.end;
-    //
-    //     $http({
-    //         method: "GET",
-    //         url: "/attendance/get",
-    //         data: $scope.filter
-    //     }).then(function (response) {
-    //         $scope.collection = response.data;
-    //         console.log($scope.collection);
-    //     });
-    // };
-
-    $scope.getDate = function () {
-        console.log($scope.date);
-    }
-});
-
-app.controller('RowController', function ($scope, $http) {
-    $scope.toggleRow = function () {
-        $scope.selected = !$scope.selected;
+    $scope.getDate = function (months) {
+        console.log(months);
+        $http({
+            method: "GET",
+            url: "/attendance/get/" + months
+        }).then(function (response) {
+            $scope.collection = [];
+            $scope.createDaysForTable();
+            $scope.collection = response.data;
+        });
     };
 
-    $scope.isSelected = function (i) {
-        return $scope.selected;
+    $scope.createDaysForTable = function () {
+        for (let i = 1; i < 32; i++) {
+            $scope.days.push(i);
+        }
     };
 });

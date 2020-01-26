@@ -79,7 +79,6 @@ public class SerialHandler extends Thread {
 
                         saveAttendanceAccordingToSlaveId(m, slaveId, cardId);
 
-                        setRegistersToNull(m, slaveId);
                         if (slaveId == 1) slaveId = 2;
                         else slaveId = 1;
 

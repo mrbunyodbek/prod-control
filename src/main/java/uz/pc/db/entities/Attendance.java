@@ -38,6 +38,10 @@ public class Attendance extends UpdateBaseEntity {
     private LocalDate arrivalDate;
 
     @Nullable
+    @Column(name = "arrival_day")
+    private int arrivalDay;
+
+    @Nullable
     @Column(name = "arrival_difference")
     private long arrivalDifference;
 
@@ -48,6 +52,10 @@ public class Attendance extends UpdateBaseEntity {
     @Nullable
     @Column(name = "departure_date")
     private LocalDate departureDate;
+
+    @Nullable
+    @Column(name = "departure_day")
+    private int departureDay;
 
     @Nullable
     @Column(name = "departure_difference")

@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.pc.db.entities.Attendance;
 import uz.pc.db.entities.Employee;
-
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +13,6 @@ import java.util.List;
 public class EmployeeAndAttendance {
 
     Employee employee;
-    List<Attendance> attendanceList;
+    AttendanceWithDate[] attendanceList;
 
 }

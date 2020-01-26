@@ -29,10 +29,10 @@ public class AttendanceController {
 
     @RequestMapping(value = "/get/{month}", method = RequestMethod.GET)
     public ResponseEntity<List<EmployeeAndAttendance>> getAllByMonth(@PathVariable String month) {
-        return new ResponseEntity<>(attendanceDAO.getAllAttendancesByEmployees(month), HttpStatus.OK);
+        return new ResponseEntity<>(attendanceDAO.getAllAttendancesByEmployees(month.toUpperCase()), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/get/{employeeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get/by-employee/{employeeId}", method = RequestMethod.GET)
     public ResponseEntity<EmployeeAndAttendance> getAllByEmployeeAndMonth(
             @PathVariable int employeeId) {
         return new ResponseEntity<>(attendanceDAO.getAllAttendanceForOneEmployee(employeeId), HttpStatus.OK);

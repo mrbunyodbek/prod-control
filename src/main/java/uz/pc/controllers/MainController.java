@@ -42,7 +42,7 @@ public class MainController {
      */
     @RequestMapping(value = "/production", method = RequestMethod.GET)
     public ModelAndView actionProductionIndex() {
-        view = new ModelAndView("pages/production/index_paginated");
+        view = new ModelAndView("pages/production/index");
         return view;
     }
 

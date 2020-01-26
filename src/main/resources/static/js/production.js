@@ -1,12 +1,20 @@
 var app = angular.module("productionControl", []);
 
 app.controller('ProductionIndexController', function ($scope, $window, $http, sharedParam, $rootScope) {
+
+    $scope.itemCount = 10;
+    $scope.pageNo = 0;
+    $scope.currentPage = 0;
+    $scope.sortingDirection = true;
+    $scope.totalPages = 0;
+    $scope.pageLinks = [];
+
     //CRUD
     $http({
         method: "GET",
-        url: "/production/get"
+        url: "/production/get/0/10/true"
     }).then(function (response) {
-        $scope.production = response.data;
+        $scope.prepareReceivedCollection(response);
     });
 
     $scope.openModal = function ($id) {
@@ -23,14 +31,67 @@ app.controller('ProductionIndexController', function ($scope, $window, $http, sh
         });
     };
 
-    $scope.getAll = function () {
+    $scope.getAll = function (link) {
         $http({
             method: "GET",
-            url: "/production/get"
+            url: link
         }).then(function (response) {
-            $scope.production = response.data;
+            $scope.prepareReceivedCollection(response);
         });
-    }
+    };
+
+    $scope.prepareReceivedCollection = function (response) {
+        $scope.production = response.data.pwp;
+        $scope.totalPages = response.data.totalPages;
+        $scope.currentPage = response.data.currentPage;
+
+        let links = [];
+        if ($scope.currentPage === 0) {
+            for (let i = 0; i <= 4; ++i) {
+                let page = $scope.pageLinksCreator(i);
+                links.push(page);
+            }
+        } else if ($scope.currentPage === 1) {
+            for (let i = $scope.currentPage - 1; i < $scope.currentPage + 4; i++) {
+                let page = $scope.pageLinksCreator(i);
+                links.push(page);
+            }
+        } else if ($scope.currentPage > 1 && $scope.currentPage < $scope.totalPages - 2) {
+            for (let i = $scope.currentPage - 2; i < $scope.currentPage + 3; i++) {
+                let page = $scope.pageLinksCreator(i);
+                links.push(page);
+            }
+        } else if ($scope.currentPage === $scope.totalPages - 2) {
+            for (let i = $scope.currentPage - 3; i < $scope.currentPage + 2; i++) {
+                let page = $scope.pageLinksCreator(i);
+                links.push(page);
+            }
+        } else if ($scope.currentPage === $scope.totalPages - 1) {
+            for (let i = $scope.currentPage - 4; i <= $scope.currentPage; i++) {
+                let page = $scope.pageLinksCreator(i);
+                links.push(page);
+            }
+        }
+        $scope.pageLinks = links;
+
+        $scope.firstAndLastLinks = {
+            "first": "/production/get/0/" + $scope.itemCount + "/" + $scope.sortingDirection,
+            "last" : "/production/get/" + $scope.totalPages - 1 + "/" + $scope.itemCount + "/" + $scope.sortingDirection
+        };
+    };
+
+    // Create an object called page and fill it with index number and link to the page
+    $scope.pageLinksCreator = function (id) {
+        let page = {
+            "index": 0,
+            "link": ""
+        };
+
+        page.index = id;
+        page.link = "/production/get/" + id + "/" + $scope.itemCount + "/" + $scope.sortingDirection;
+
+        return page;
+    };
 });
 
 app.controller('RegisterProduction', function ($scope, $window, $http, sharedParam, $rootScope) {
