@@ -52,7 +52,7 @@ public class AttendanceDAOImpl implements AttendanceDAO {
 
             AttendanceWithDate[] atWithDate = new AttendanceWithDate[31];
             for (int i = 0; i < atWithDate.length; i++) {
-                atWithDate[i] = new AttendanceWithDate(i+1, null, null, 0);
+                atWithDate[i] = new AttendanceWithDate(i+1, null, null, "--");
             }
 
             for (Attendance attendance : attendancesForEmployee) {
@@ -61,6 +61,8 @@ public class AttendanceDAOImpl implements AttendanceDAO {
                 atWithDate[attendance.getArrivalDay()].setArrivalTime(attendance.getArrivalTime());
 
                 atWithDate[attendance.getArrivalDay()].setDepartureTime(attendance.getDepartureTime());
+
+                atWithDate[attendance.getArrivalDay()].setWorkedHour(generateWorkedHourString(attendance.getWorkedHours()));
             }
 
             ea.setAttendanceList(atWithDate);
@@ -68,6 +70,22 @@ public class AttendanceDAOImpl implements AttendanceDAO {
         }
 
         return eaa;
+    }
+
+    private String generateWorkedHourString(long wh) {
+        int minutes = (int) wh % 60;
+        int hours = (int) wh / 60;
+
+        String strHours = "";
+        String strMinutes = "";
+
+        if (hours < 10) strHours = "0" + hours;
+        else strHours = "" + hours;
+
+        if (minutes < 10) strMinutes = "0" + minutes;
+        else strMinutes = "" + minutes;
+
+        return strHours + ":" + strMinutes;
     }
 
     @Override
@@ -90,6 +108,11 @@ public class AttendanceDAOImpl implements AttendanceDAO {
                     attendance.getArrivalTime(), attendance.getDepartureTime()
             ));
             attendance.setDepartureDate(LocalDate.now());
+
+            attendance.setWorkedHours(
+                    calculateWorkedHours(attendance.getArrivalTime(), attendance.getDepartureTime())
+            );
+
             attendance.setDepartureDay(LocalDate.now().getDayOfMonth());
             attendance.setDepartureDifference(calculateDepartureDifference(LocalTime.now()));
             attendance.setClosedDay(true);
@@ -138,6 +161,12 @@ public class AttendanceDAOImpl implements AttendanceDAO {
     private long calculateArrivalDifference(LocalTime now) {
         return ChronoUnit.MINUTES.between(
                 now, settings.getStartOfDay()
+        );
+    }
+
+    private long calculateWorkedHours(LocalDateTime start, LocalDateTime end) {
+        return ChronoUnit.MINUTES.between(
+                start, end
         );
     }
 

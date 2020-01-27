@@ -20,6 +20,6 @@ public class AttendanceWithDate {
     private int date;
     private LocalDateTime arrivalTime;
     private LocalDateTime departureTime;
-    private int workedHour;
+    private String workedHour;
 
 }
