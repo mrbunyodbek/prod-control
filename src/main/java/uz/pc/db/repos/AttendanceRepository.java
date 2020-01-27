@@ -18,5 +18,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
     List<Attendance> findAllByEmployeeIdAndMonth(int employeeId, String month);
     Attendance findByEmployeeIdAndClosedDayFalse(int employeeId);
     Attendance findByCardIdAndClosedDayFalse(String cardId);
+    Attendance findByCardIdAndClosedDayTrue(String cardId);
 
 }

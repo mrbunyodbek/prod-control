@@ -1,27 +1,98 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Production Control</title>
-    <!-- Tell the browser to be responsive to screen width -->
+    <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Dashboard</title>
 
-    <link rel="stylesheet" href="webjars/AdminLTE/2.4.0/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="webjars/AdminLTE/2.4.0/bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="webjars/AdminLTE/2.4.0/bower_components/Ionicons/css/ionicons.min.css">
-    <link rel="stylesheet" href="webjars/AdminLTE/2.4.0/dist/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="webjars/AdminLTE/2.4.0/dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/bootstrap/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/Ionicons/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/bower_components/datatables.net-bs/css/dataTables.bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/AdminLTE.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/2.4.0/dist/css/skins/skin-blue.min.css}">
+
 </head>
-<body  class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-    <div th:insert="~{partials/header :: section__header}"></div>
-    <div th:insert="~{partials/sidebar :: section__sidebar}"></div>
+<body ng-app="dashboardControl" class="skin-blue fixed sidebar-mini" style="height: auto; min-height: 100%;">
 
+<div th:insert="~{partials/header :: section__header}"></div>
+<div th:insert="~{partials/sidebar :: section__sidebar}"></div>
 
+<div class="content-wrapper" ng-controller="ProductionIndexController">
+    <div th:insert="~{partials/content-header :: section__content-header}"></div>
 
-    <div th:insert="~{partials/footer :: section__footer}"></div>
+    <section class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="ion ion-android-bicycle"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total production</span>
+                        <span class="info-box-number">{{ statistics.productionCount }}<small>prods</small></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="ion ion-android-cart"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total products</span>
+                        <span class="info-box-number">{{ statistics.productCount }}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="ion ion-android-people"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Employees</span>
+                        <span class="info-box-number">{{ statistics.employeeCount }}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12 col-xs-12">
+                <!-- LINE CHART -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Total costs by products</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="chart">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+
+        </div>
+    </section>
 </div>
-    <div th:insert="~{partials/scripts :: section__scripts}"></div>
+
+<div th:insert="~{partials/footer :: section__footer}"></div>
+<div th:insert="~{partials/scripts :: section__scripts}"></div>
+<script th:src="@{//webjars/AdminLTE/2.4.0/bower_components/bower_components/chart.js/Chart.js}"></script>
+<script th:src="@{//js/dashboard.js}"></script>
+
 </body>
 </html>

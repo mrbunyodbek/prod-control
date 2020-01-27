@@ -84,8 +84,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public int getIdByCardId(String cardId) {
-        return repository.getIdOfEmployeeByCardId(cardId);
+    public Employee getIdByCardId(String cardId) {
+        return repository.findByCardId(cardId);
     }
 
 

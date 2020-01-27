@@ -14,6 +14,6 @@ public class ApplicationStartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        serialHandler.start();
+        serialHandler.start();
     }
 }

@@ -2,6 +2,7 @@ var app = angular.module("productionAttendanceControl", []);
 
 app.controller('AttendanceController', function ($scope, $http) {
     $scope.collection = [];
+    $scope.days = [];
 
     const date = new Date();
     const month = date.toLocaleString('default', { month: 'long' });

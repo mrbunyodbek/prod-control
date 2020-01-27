@@ -2,6 +2,7 @@ package uz.pc.db.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 import uz.pc.collections.AttendanceWithDate;
 import uz.pc.collections.EmployeeAndAttendance;
@@ -27,6 +28,7 @@ public class AttendanceDAOImpl implements AttendanceDAO {
     private EmployeeDAO employeeDAO;
 
     private Settings settings;
+    private static Logger logger = LoggerFactory.getLogger(AttendanceDAOImpl.class);
 
     public AttendanceDAOImpl(AttendanceRepository repository, EmployeeDAO employeeDAO, SettingsDAO settingsDAO) {
         this.repository = repository;
@@ -78,38 +80,59 @@ public class AttendanceDAOImpl implements AttendanceDAO {
         return ea;
     }
 
-    public void registerEmployeeDeparture(String identification) {
+    public boolean registerEmployeeDeparture(String identification) {
 
-        Attendance attendance = repository.findByCardIdAndClosedDayFalse(identification);
-        if (attendance == null) return;
-        attendance.setDepartureTime(LocalDateTime.now());
-        attendance.setDepartureDifference(ChronoUnit.MINUTES.between(
-                attendance.getArrivalTime(), attendance.getDepartureTime()
-        ));
-        attendance.setDepartureDate(LocalDate.now());
-        attendance.setDepartureDay(LocalDate.now().getDayOfMonth());
-        attendance.setDepartureDifference(calculateDepartureDifference(LocalTime.now()));
-        attendance.setClosedDay(true);
+        try {
+            Attendance attendance = repository.findByCardIdAndClosedDayFalse(identification);
+            if (attendance == null) return false;
+            attendance.setDepartureTime(LocalDateTime.now());
+            attendance.setDepartureDifference(ChronoUnit.MINUTES.between(
+                    attendance.getArrivalTime(), attendance.getDepartureTime()
+            ));
+            attendance.setDepartureDate(LocalDate.now());
+            attendance.setDepartureDay(LocalDate.now().getDayOfMonth());
+            attendance.setDepartureDifference(calculateDepartureDifference(LocalTime.now()));
+            attendance.setClosedDay(true);
 
-        repository.save(attendance);
+            repository.save(attendance);
+
+            return true;
+        } catch (IncorrectResultSizeDataAccessException e) {
+            logger.warn("Two arrivals were registered. Please, check database entries.");
+        }
+
+        return false;
+
     }
 
-    public void registerEmployeeArrival(String identification) {
-        Attendance attendance = new Attendance();
+    public boolean registerEmployeeArrival(String identification) {
+        Employee employee = employeeDAO.getIdByCardId(identification);
+        if (employee != null) {
+            Attendance attendance = new Attendance();
 
-        attendance.setCardId(identification);
+            Attendance checker = repository.findByCardIdAndClosedDayFalse(identification);
+            if (checker != null) {
+                return true;
+            }
 
-        attendance.setEmployeeId(employeeDAO.getIdByCardId(identification));
+            attendance.setCardId(identification);
 
-        attendance.setArrivalTime(LocalDateTime.now());
-        attendance.setArrivalDifference(calculateArrivalDifference(LocalTime.now()));
-        attendance.setWeekday(LocalDate.now().getDayOfWeek().name());
-        attendance.setMonth(LocalDateTime.now().getMonth().name());
-        attendance.setArrivalDay(LocalDate.now().getDayOfMonth());
-        attendance.setArrivalDate(LocalDate.now());
-        attendance.setClosedDay(false);
+            attendance.setEmployeeId(employee.getId());
 
-        repository.save(attendance);
+            attendance.setArrivalTime(LocalDateTime.now());
+            attendance.setArrivalDifference(calculateArrivalDifference(LocalTime.now()));
+            attendance.setWeekday(LocalDate.now().getDayOfWeek().name());
+            attendance.setMonth(LocalDateTime.now().getMonth().name());
+            attendance.setArrivalDay(LocalDate.now().getDayOfMonth());
+            attendance.setArrivalDate(LocalDate.now());
+            attendance.setClosedDay(false);
+
+            repository.save(attendance);
+
+            return true;
+        }
+
+        return false;
     }
 
     private long calculateArrivalDifference(LocalTime now) {
