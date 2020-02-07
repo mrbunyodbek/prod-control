@@ -7,16 +7,15 @@ import org.springframework.stereotype.Service;
 import uz.pc.collections.PagedProduction;
 import uz.pc.collections.ProductionWithPerformers;
 import uz.pc.collections.SavedProduction;
-import uz.pc.collections.Statistics;
 import uz.pc.db.dao.interfaces.PerformerDAO;
 import uz.pc.db.dao.interfaces.ProductDAO;
 import uz.pc.db.dao.interfaces.ProductionDAO;
-import uz.pc.db.entities.Product;
 import uz.pc.db.entities.Production;
 import uz.pc.db.entities.Performer;
 import uz.pc.db.repos.ProductionRepository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +23,14 @@ import java.util.List;
 @Transactional
 public class ProductionDAOImpl implements ProductionDAO {
 
+    private int reference;
+
     private ProductionRepository repository;
     private ProductDAO productDAO;
     private PerformerDAO performerDAO;
 
     public ProductionDAOImpl(ProductionRepository repository, ProductDAO productDAO, PerformerDAO performerDAO) {
+        this.reference = 0;
         this.repository = repository;
         this.productDAO = productDAO;
         this.performerDAO = performerDAO;
@@ -99,9 +101,17 @@ public class ProductionDAOImpl implements ProductionDAO {
     @Override
     public void saveProduction(SavedProduction production) {
         production.getProduction().setDate(production.getProduction().getDate().withHour(15));
-        production.getProduction().setDate(production.getProduction().getDate().withMinute(0));
-        production.getProduction().setDate(production.getProduction().getDate().withSecond(0));
+//        production.getProduction().setDate(production.getProduction().getDate().withMinute(0));
+//        production.getProduction().setDate(production.getProduction().getDate().withSecond(0));
         production.getProduction().setDate(production.getProduction().getDate().withNano(0));
+
+        production.getProduction().setMonth(production.getProduction().getDate().getMonth().name());
+        production.getProduction().setYear(production.getProduction().getDate().getYear());
+
+        production.getProduction().setReference(generateReferenceNumber(
+                production.getProduction().getDate(),
+                production.getProduction().getProductId()
+        ));
 
         Production savedProd = repository.save(production.getProduction());
         List<Performer> performers = production.getPerformers();
@@ -118,5 +128,45 @@ public class ProductionDAOImpl implements ProductionDAO {
     public void deleteProduction(int id) {
         performerDAO.deletePerformer(id);
         repository.deleteById(id);
+    }
+
+    /**
+     * Returns generated reference number which consist of:
+     *
+     * P01          - Product id
+     * D20200101    - production date
+     * R0000        - reference
+     *
+     * @return P01D20200101R0000
+     */
+    private String generateReferenceNumber(LocalDateTime time, int productId) {
+        return "P" + productId
+                + "D"
+                + time.getYear()
+                + time.getMonthValue()
+                + time.getDayOfMonth()
+                + "T"
+                + time.getHour()
+                + time.getMinute()
+                + "R"
+                + referenceGenerator();
+    }
+
+    private String referenceGenerator() {
+        String ref = "";
+        ++reference;
+
+        if (reference < 10) {
+            ref =  "000" + reference;
+        } else if (reference < 100) {
+            ref = "00" + reference;
+        } else if (reference < 1000) {
+            ref = "0" + reference;
+        } else if (reference == 1000) {
+            ref = "" + 1000;
+            reference = 0;
+        }
+
+        return ref;
     }
 }

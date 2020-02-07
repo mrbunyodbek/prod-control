@@ -22,6 +22,7 @@ app.controller('AttendanceController', function ($scope, $http) {
             method: "GET",
             url: "/attendance/get/" + months
         }).then(function (response) {
+            console.log(response.data);
             $scope.collection = [];
             $scope.createDaysForTable();
             $scope.collection = response.data;

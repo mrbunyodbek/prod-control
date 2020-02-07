@@ -8,7 +8,6 @@ import com.intelligt.modbus.jlibmodbus.exception.ModbusNumberException;
 import com.intelligt.modbus.jlibmodbus.exception.ModbusProtocolException;
 import com.intelligt.modbus.jlibmodbus.serial.SerialParameters;
 import com.intelligt.modbus.jlibmodbus.serial.SerialPort;
-import com.intelligt.modbus.jlibmodbus.serial.SerialPortException;
 import jssc.SerialPortList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,12 +80,11 @@ public class SerialHandler extends Thread {
 
                         int[] registerValues = m.readHoldingRegisters(slaveId, startingPoint, registersQuantity);
 
-                        // print values
-                        for (int value : registerValues) {
-                            cardId.append(value);
-                        }
+                        cardId.append(registerValues[0]);
 
-//                        setRegistersToNull(m, slaveId);
+                        String data = Integer.toString(registerValues[1]);
+                        if (data.length() == 3) data = "0" + data;
+                        cardId.append(data);
 
                         saveAttendanceAccordingToSlaveId(m, slaveId, cardId);
 

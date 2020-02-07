@@ -44,15 +44,17 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public HttpStatus save(@Valid @RequestBody Employee employee) {
-        dao.saveEmployee(employee);
-        return HttpStatus.OK;
+    public ResponseEntity<String> save(@Valid @RequestBody Employee employee) {
+        boolean response = dao.saveEmployee(employee);
+        if (!response) return new ResponseEntity<>("This id has saved already!!!", HttpStatus.OK);
+        return new ResponseEntity<>("Saved", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public HttpStatus edit(@Valid @RequestBody Employee employee) {
-        dao.editEmployee(employee);
-        return HttpStatus.OK;
+    public ResponseEntity<String> edit(@Valid @RequestBody Employee employee) {
+        boolean response = dao.editEmployee(employee);
+        if (!response) return new ResponseEntity<>("This id has saved already!!!", HttpStatus.OK);
+        return new ResponseEntity<>("Saved", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)

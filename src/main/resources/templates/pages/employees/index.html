@@ -55,12 +55,13 @@
                         </div>
 
                         <div class="box-body table-responsive no-padding">
-                            <table class="table">
+                            <table class="table table-hover">
                                 <tr>
                                     <th>ID</th>
                                     <th>First name</th>
                                     <th>Second name</th>
                                     <th>Experience</th>
+                                    <th></th>
                                     <th>Actions</th>
                                 </tr>
                                 <tr ng-repeat="res in employees | filter : searchItem">
@@ -165,7 +166,7 @@
 <script th:src="@{//js/employees.js}"></script>
 <script>
     $(document).ready(function () {
-        $('#cardId').mask('0000000');
+        $('#cardId').mask('00000000');
     });
 </script>
 

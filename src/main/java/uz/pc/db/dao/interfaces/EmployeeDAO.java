@@ -12,8 +12,8 @@ public interface EmployeeDAO {
     List<SalaryCollection> getAllForSalaries(Filter filter);
     Employee getById(int id);
     Employee getIdByCardId(String cardId);
-    void saveEmployee(Employee employee);
-    void editEmployee(Employee employee);
+    boolean saveEmployee(Employee employee);
+    boolean editEmployee(Employee employee);
     void deleteEmployee(int id);
 
 }

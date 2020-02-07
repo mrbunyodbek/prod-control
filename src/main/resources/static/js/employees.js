@@ -52,19 +52,20 @@ app.controller('EmployeeModalController', function ($scope, $window, $http, shar
             url: "/employees/edit",
             data: $scope.employee
         }).then(function (response) {
+            console.log(response.data);
+            alert(response.data);
             $window.location.reload();
         });
     };
 
     $scope.saveEmployee = function () {
 
-        // $scope.employee.productId = parseInt(document.getElementById("group").value);
-
         $http({
             method: "POST",
             url: "/employees/save",
             data: $scope.employee
         }).then(function (response) {
+            alert(response.data);
             $window.location.reload();
         });
     };

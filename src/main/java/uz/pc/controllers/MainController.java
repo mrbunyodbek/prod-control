@@ -4,18 +4,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import uz.pc.db.dao.interfaces.DashboardDAO;
 
 @Controller
 public class MainController {
 
     private ModelAndView view;
+    private DashboardDAO dashboardDAO;
+
+    public MainController(DashboardDAO dashboardDAO) {
+        this.dashboardDAO = dashboardDAO;
+    }
 
     /*
      * Other pages
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView actionIndex() {
-        view = new ModelAndView("pages/production/index");
+        view = new ModelAndView("dashboard");
+        view.addObject("statsCollection", dashboardDAO.collectStatsForProduction());
         return view;
     }
 

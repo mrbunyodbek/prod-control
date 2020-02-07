@@ -20,6 +20,7 @@
             border-right: 1px solid #c1c1c1;
         }
         .next-column {
+            min-height: 37px;
             margin-left: 200px;
         }
     </style>
@@ -94,25 +95,22 @@
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="item in collection">
-                                    <td class="first-column">{{ item.employee.firstName }}</td>
-                                    <td style="min-width: 200px"></td>
-                                    <td class="next-column" ng-repeat="attendance in item.attendanceList">
-                                        <span class="badge bg-green" ng-if="attendance.arrivalTime !== null">
-                                            <i class="fa fa-arrow-down"></i>{{ attendance.arrivalTime.substring(11,16) }}
-                                        </span>
-                                        <span class="badge bg-gray" ng-if="attendance.arrivalTime === null">
-                                            <i class="fa fa-arrow-down"></i>-
-                                        </span>
-                                        <span class="badge bg-blue">
-                                            <i class="fa fa-clock-o"></i>{{ attendance.workedHour }}
-                                        </span>
-                                        <span class="badge bg-orange" ng-if="attendance.departureTime !== null">
-                                            <i class="fa fa-arrow-up"></i>{{ attendance.departureTime.substring(11,16) }}
-                                        </span>
-                                        <span class="badge bg-gray" ng-if="attendance.departureTime === null">
-                                            <i class="fa fa-arrow-up"></i>-
-                                        </span>
+                                    <td class="first-column" style="min-height: 37px;">{{ item.employee.firstName }}</td>
+                                    <td style="min-width: 200px;"></td>
+                                    <td class="next-column" ng-repeat="item in item.attendanceList">
+                                        <div ng-repeat="attendance in item.details">
+                                            <span class="badge bg-green" ng-if="attendance.arrivalTime !== null">
+                                                <i class="fa fa-arrow-down"></i>{{ attendance.arrivalTime.substring(11,16) }}
+                                            </span>
+                                                <span class="badge bg-blue">
+                                                <i class="fa fa-clock-o"></i>{{ attendance.workedHour }}
+                                            </span>
+                                                <span class="badge bg-orange" ng-if="attendance.departureTime !== null">
+                                                <i class="fa fa-arrow-up"></i>{{ attendance.departureTime.substring(11,16) }}
+                                            </span>
+                                        </div>
                                     </td>
+                                    <td>{{ (item.overallHours - (item.overallHours % 60)) / 60 }}:{{ item.overallHours % 60 }}</td>
                                 </tr>
                                 </tbody>
                             </table>

@@ -179,19 +179,13 @@
                 <div class="modal-body">
                     <div class="row">
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="date">Date</label>
                                 <input type="date" class="form-control" id="date" ng-model="production.date" ng-value="production.date.substring(0,10)">
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="reference">No.</label>
-                                <input type="text" class="form-control" id="reference" ng-model="production.reference">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="product">Select product</label>
                                 <select name="product" id="product" ng-model="production.product" ng-options="obj.id as obj.name for obj in products track by obj.id" class="form-control" ng-change="selectProduct()"></select>

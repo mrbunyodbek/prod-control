@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 import uz.pc.db.entities.base.UpdateBaseEntity;
 
 import javax.persistence.*;
@@ -19,6 +20,14 @@ public class Production extends UpdateBaseEntity {
 
     @Column(name = "date")
     private LocalDateTime date;
+
+    @Nullable
+    @Column(name = "year")
+    private int year;
+
+    @Nullable
+    @Column(name = "month")
+    private String month;
 
     @Column(name = "reference_number")
     private String reference;

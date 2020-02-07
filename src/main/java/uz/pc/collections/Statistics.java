@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.pc.db.entities.Product;
 
-import java.util.HashMap;
 import java.util.Hashtable;
 
 @AllArgsConstructor
@@ -16,8 +14,10 @@ import java.util.Hashtable;
 public class Statistics {
 
     Hashtable<String, Integer> costByProduct;
+    Hashtable<String, Integer> amountByProduct;
     int productionCount;
     int productCount;
     int employeeCount;
+    int overallCost;
 
 }

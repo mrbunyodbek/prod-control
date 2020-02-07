@@ -1,6 +1,9 @@
 package uz.pc.db.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import uz.pc.collections.Filter;
 import uz.pc.collections.SalaryCollection;
@@ -25,6 +28,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     private ProductionRepository productionRepository;
     private ProductRepository productRepository;
 
+    private Logger logger = LoggerFactory.getLogger(EmployeeDAOImpl.class);
 
     @Autowired
     public EmployeeDAOImpl(
@@ -90,18 +94,32 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 
     @Override
-    public void saveEmployee(Employee employee) {
-        repository.save(employee);
+    public boolean saveEmployee(Employee employee) {
+        try {
+            repository.save(employee);
+        } catch (DataIntegrityViolationException ex) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
-    public void editEmployee(Employee employee) {
-        Employee temp = repository.findById(employee.getId());
-        temp.setSecondName(employee.getSecondName());
-        temp.setFirstName(employee.getFirstName());
-        temp.setExperience(employee.getExperience());
+    public boolean editEmployee(Employee employee) {
+        try {
+            Employee temp = repository.findById(employee.getId());
+            temp.setSecondName(employee.getSecondName());
+            temp.setFirstName(employee.getFirstName());
+            temp.setExperience(employee.getExperience());
+            temp.setCardId(employee.getCardId());
 
-        repository.save(temp);
+            repository.save(temp);
+        } catch (DataIntegrityViolationException ex) {
+            logger.warn("");
+            return false;
+        }
+
+        return true;
     }
 
     @Override

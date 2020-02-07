@@ -1,25 +1,35 @@
 package uz.pc.collections;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * AttendanceWithDate class will be used for collecting information
  * about particular working date.
  */
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 public class AttendanceWithDate {
 
     private int date;
-    private LocalDateTime arrivalTime;
-    private LocalDateTime departureTime;
-    private String workedHour;
+    private List<AttendanceDetails> details;
 
+    public AttendanceWithDate(int date) {
+        this.date = date;
+        this.details = new ArrayList<>();
+    }
+
+    public int getDate() {
+        return date;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
+    }
+
+    public List<AttendanceDetails> getDetails() {
+        return details;
+    }
+
+    public void setDetails(AttendanceDetails details) {
+        this.details.add(details);
+    }
 }

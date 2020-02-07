@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
+import uz.pc.collections.AttendanceDetails;
 import uz.pc.collections.AttendanceWithDate;
 import uz.pc.collections.EmployeeAndAttendance;
 import uz.pc.db.dao.interfaces.AttendanceDAO;
@@ -52,17 +53,19 @@ public class AttendanceDAOImpl implements AttendanceDAO {
 
             AttendanceWithDate[] atWithDate = new AttendanceWithDate[31];
             for (int i = 0; i < atWithDate.length; i++) {
-                atWithDate[i] = new AttendanceWithDate(i+1, null, null, "--");
+                atWithDate[i] = new AttendanceWithDate(i+1);
             }
 
             for (Attendance attendance : attendancesForEmployee) {
-                atWithDate[attendance.getArrivalDay()].setDate(attendance.getArrivalDay());
+//                atWithDate[attendance.getArrivalDay()].setDate(attendance.getArrivalDay());
+                AttendanceDetails temp = new AttendanceDetails();
+                temp.setArrivalTime(attendance.getArrivalTime());
+                temp.setDepartureTime(attendance.getDepartureTime());
+                temp.setWorkedHour(generateWorkedHourString(attendance.getWorkedHours()));
 
-                atWithDate[attendance.getArrivalDay()].setArrivalTime(attendance.getArrivalTime());
+                atWithDate[attendance.getArrivalDay()].setDetails(temp);
 
-                atWithDate[attendance.getArrivalDay()].setDepartureTime(attendance.getDepartureTime());
-
-                atWithDate[attendance.getArrivalDay()].setWorkedHour(generateWorkedHourString(attendance.getWorkedHours()));
+                ea.setOverallHours((int) attendance.getWorkedHours());
             }
 
             ea.setAttendanceList(atWithDate);
