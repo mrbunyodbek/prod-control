@@ -25,16 +25,16 @@ public class ApplicationStartupRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Settings settings = settingsDAO.getSettings();
+//        Settings settings = settingsDAO.getSettings();
 
-        if (settings == null) {
-            logger.info("Setting up default time to: 08:00:00 - 18:00:00");
-            settings = new Settings();
-            settings.setStartOfDay(LocalTime.of(8,0,0));
-            settings.setEndOfDay(LocalTime.of(18,0,0));
-
-            settingsDAO.saveSettings(settings);
-        }
+//        if (settings == null) {
+//            logger.info("Setting up default time to: 08:00:00 - 18:00:00");
+//            settings = new Settings();
+//            settings.setStartOfDay(LocalTime.of(8,0,0));
+//            settings.setEndOfDay(LocalTime.of(18,0,0));
+//
+//            settingsDAO.saveSettings(settings);
+//        }
 
         serialHandler.start();
     }

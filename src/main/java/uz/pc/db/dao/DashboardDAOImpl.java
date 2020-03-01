@@ -55,7 +55,11 @@ public class DashboardDAOImpl implements DashboardDAO {
         statistics.setProductionCount(productionRepository.calculateCountOfProductions(thisTime.getMonth().name(), thisTime.getYear()));
         statistics.setEmployeeCount(employeeRepository.calculateCountOfEmployees());
         statistics.setProductCount(productRepository.calculateCountOfProducts());
-        statistics.setOverallCost(productionRepository.calculateFullCostOfProductions(thisTime.getMonth().name(), thisTime.getYear()));
+        try {
+            statistics.setOverallCost(productionRepository.calculateFullCostOfProductions(thisTime.getMonth().name(), thisTime.getYear()));
+        } catch (AopInvocationException e) {
+            statistics.setOverallCost(0);
+        }
 
         return statistics;
     }

@@ -1,6 +1,1 @@
-INSERT INTO public.db_products (id, created_at, updated_at, product_desc, measurement, product_name, product_rate) VALUES (1, null, '2019-12-10 18:44:11.882000', '', 'kg', 'Keks', 1200);
-INSERT INTO public.db_products (id, created_at, updated_at, product_desc, measurement, product_name, product_rate) VALUES (2, null, '2019-12-10 18:44:27.483000', '', 'kg', 'Ragali', 2000);
-INSERT INTO public.db_products (id, created_at, updated_at, product_desc, measurement, product_name, product_rate) VALUES (3, null, '2019-12-10 18:44:46.387000', '', 'kg', 'Snikers', 1500);
-INSERT INTO public.db_products (id, created_at, updated_at, product_desc, measurement, product_name, product_rate) VALUES (4, '2019-12-10 18:44:59.290000', '2019-12-12 17:33:58.501000', null, 'kg', 'Rulet', 1500);
-INSERT INTO public.db_products (id, created_at, updated_at, product_desc, measurement, product_name, product_rate) VALUES (6, '2019-12-12 17:42:32.012000', '2019-12-12 20:11:58.821000', '', 'kg', 'pesochniy', 500);
-INSERT INTO public.db_products (id, created_at, updated_at, product_desc, measurement, product_name, product_rate) VALUES (5, '2019-12-12 17:41:34.895000', '2019-12-12 20:12:05.817000', '', 'kg', 'Frutto', 1000);
+INSERT INTO public.db_settings (id, created_at, updated_at, end_of_day, start_of_day) VALUES (1, null, null, '18:00:00', '08:00:00');

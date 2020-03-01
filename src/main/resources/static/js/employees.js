@@ -53,7 +53,7 @@ app.controller('EmployeeModalController', function ($scope, $window, $http, shar
             data: $scope.employee
         }).then(function (response) {
             console.log(response.data);
-            alert(response.data);
+            // alert(response.data);
             $window.location.reload();
         });
     };
@@ -65,7 +65,7 @@ app.controller('EmployeeModalController', function ($scope, $window, $http, shar
             url: "/employees/save",
             data: $scope.employee
         }).then(function (response) {
-            alert(response.data);
+            // alert(response.data);
             $window.location.reload();
         });
     };
