@@ -123,7 +123,7 @@ public class XLSHandlerService {
 
             FileOutputStream outputStream = null;
             try {
-                outputStream = new FileOutputStream(path + "/segmented.xlsx");
+                outputStream = new FileOutputStream("segmented.xlsx");
                 workbook.write(outputStream);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -207,7 +207,7 @@ public class XLSHandlerService {
 
         FileOutputStream outputStream = null;
         try {
-            outputStream = new FileOutputStream(path + "/overall.xlsx");
+            outputStream = new FileOutputStream("overall.xlsx");
             workbook.write(outputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

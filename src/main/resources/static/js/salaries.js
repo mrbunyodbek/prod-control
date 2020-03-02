@@ -39,7 +39,10 @@ app.controller('SalaryController', function ($scope, $http) {
             url: "/salaries/save-to-file",
             data: $scope.filter
         }).then(function (response) {
-
+            let blob = new Blob([response.data], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            });
+            saveAs(blob, 'segmented' + '.xlsx');
         });
     };
 
@@ -52,7 +55,10 @@ app.controller('SalaryController', function ($scope, $http) {
             url: "/salaries/save-overall",
             data: $scope.filter
         }).then(function (response) {
-
+            let blob = new Blob([response.data], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            });
+            saveAs(blob, 'segmented' + '.xlsx');
         });
     };
 
