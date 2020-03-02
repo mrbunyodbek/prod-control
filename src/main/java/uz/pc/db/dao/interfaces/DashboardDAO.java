@@ -4,6 +4,6 @@ import uz.pc.collections.Statistics;
 
 public interface DashboardDAO {
 
-    Statistics collectStatsForProduction();
+    Statistics collectStatsForProduction(String month);
 
 }

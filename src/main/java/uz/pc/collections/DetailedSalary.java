@@ -15,7 +15,8 @@ public class DetailedSalary {
     private int productionId;
     private LocalDateTime productionDate;
     private String productionReference;
-    private Product product;
+    private String product;
+    private double experience;
     private double workedHours;
     private double salary;
 

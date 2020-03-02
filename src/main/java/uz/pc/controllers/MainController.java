@@ -1,10 +1,13 @@
 package uz.pc.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uz.pc.db.dao.interfaces.DashboardDAO;
+
+import java.time.LocalDateTime;
 
 @Controller
 public class MainController {
@@ -22,7 +25,14 @@ public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView actionIndex() {
         view = new ModelAndView("dashboard");
-        view.addObject("statsCollection", dashboardDAO.collectStatsForProduction());
+        view.addObject("statsCollection", dashboardDAO.collectStatsForProduction(LocalDateTime.now().getMonth().name()));
+        return view;
+    }
+
+    @RequestMapping(value = "/filter/{month}", method = RequestMethod.GET)
+    public ModelAndView actionIndex(@PathVariable String month) {
+        view = new ModelAndView("dashboard");
+        view.addObject("statsCollection", dashboardDAO.collectStatsForProduction(month));
         return view;
     }
 

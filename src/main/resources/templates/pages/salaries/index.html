@@ -84,6 +84,7 @@
                                     <td></td>
                                     <td>Production date</td>
                                     <td>Reference number</td>
+                                    <td>Product</td>
                                     <td>Worked hours</td>
                                     <td>Salary</td>
                                 </tr>
@@ -97,18 +98,21 @@
                                         <td><br>{{ item.employee.firstName }} {{ item.employee.secondName }}</br></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td><br>{{ item.overallSalary }}</br></td>
                                     </tr>
                                     <tr ng-switch-when="true" ng-repeat="p in item.details">
                                         <td></td>
                                         <td>{{ p.productionDate.substring(0,10) }}</td>
                                         <td>{{ p.productionReference }}</td>
+                                        <td>{{ p.product }}</td>
                                         <td>{{ p.workedHours }}</td>
                                         <td>{{ p.salary }}</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>

@@ -201,6 +201,14 @@ app.controller('RegisterProduction', function ($scope, $window, $http, sharedPar
                 $scope.addNewRow();
             }
         }
+
+        console.log($scope.employees);
+        console.log($scope.performerRows);
+        for (let i = 0; i < $scope.employees.length; i++) {
+            if ($scope.employees[i].id === $scope.performerRows[$scope.performerRows.length - 2].employee.id) {
+                $scope.employees.splice(i, 1);
+            }
+        }
     };
 
     $scope.addNewRow = function () {

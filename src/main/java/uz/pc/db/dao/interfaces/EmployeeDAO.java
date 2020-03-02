@@ -9,7 +9,7 @@ import java.util.List;
 public interface EmployeeDAO {
 
     List<Employee> getAll();
-    List<SalaryCollection> getAllForSalaries(Filter filter);
+    List<SalaryCollection> getSalariesInformation(Filter filter);
     Employee getById(int id);
     Employee getIdByCardId(String cardId);
     boolean saveEmployee(Employee employee);

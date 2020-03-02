@@ -19,6 +19,7 @@ public class SalaryCollection {
 
     public void setOneDetail(DetailedSalary detail) {
         this.details.add(detail);
+        this.overallSalary += detail.getSalary();
     }
 
     public void calcOverallSalary(double salary) {

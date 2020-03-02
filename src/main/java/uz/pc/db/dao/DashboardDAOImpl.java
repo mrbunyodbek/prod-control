@@ -31,7 +31,7 @@ public class DashboardDAOImpl implements DashboardDAO {
     }
 
     @Override
-    public Statistics collectStatsForProduction() {
+    public Statistics collectStatsForProduction(String month) {
         LocalDateTime thisTime = LocalDateTime.now();
 
         List<Product> productList = productRepository.findAll();
@@ -41,8 +41,8 @@ public class DashboardDAOImpl implements DashboardDAO {
 
         for (Product product : productList) {
             try {
-                int cost = productionRepository.totalProductionByProduct(product.getId(), thisTime.getMonth().name(), thisTime.getYear());
-                int amount = productionRepository.totalAmountOfProductionByProduct(product.getId(), thisTime.getMonth().name(), thisTime.getYear());
+                int cost = productionRepository.totalProductionByProduct(product.getId(), month, thisTime.getYear());
+                int amount = productionRepository.totalAmountOfProductionByProduct(product.getId(), month, thisTime.getYear());
 
                 prods.put(product.getName(), cost);
                 amounts.put(product.getName(), amount);
@@ -50,15 +50,17 @@ public class DashboardDAOImpl implements DashboardDAO {
                 logger.warn("AopInvocationException. Couldn't found data for " + product.getName());
             }
         }
+
         statistics.setCostByProduct(prods);
         statistics.setAmountByProduct(amounts);
-        statistics.setProductionCount(productionRepository.calculateCountOfProductions(thisTime.getMonth().name(), thisTime.getYear()));
         statistics.setEmployeeCount(employeeRepository.calculateCountOfEmployees());
         statistics.setProductCount(productRepository.calculateCountOfProducts());
+
         try {
-            statistics.setOverallCost(productionRepository.calculateFullCostOfProductions(thisTime.getMonth().name(), thisTime.getYear()));
+            statistics.setProductionCount(productionRepository.calculateCountOfProductions(month, thisTime.getYear()));
+            statistics.setOverallCost(productionRepository.calculateFullCostOfProductions(month, thisTime.getYear()));
         } catch (AopInvocationException e) {
-            statistics.setOverallCost(0);
+            statistics.setProductCount(0);
         }
 
         return statistics;

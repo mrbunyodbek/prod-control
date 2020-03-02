@@ -105,7 +105,7 @@ public class XLSHandlerService {
                 reportDataCell.setCellValue(formatDate(detail.getProductionDate()));
 
                 reportDataCell = reportDataRow.createCell(1);
-                reportDataCell.setCellValue(detail.getProduct().getName());
+                reportDataCell.setCellValue(detail.getProduct());
 
                 reportDataCell = reportDataRow.createCell(2);
                 reportDataCell.setCellValue(detail.getWorkedHours());
@@ -181,7 +181,7 @@ public class XLSHandlerService {
                 controlData.setCellValue(detail.getProductionReference());
 
                 controlData = reportDataRow.createCell(2);
-                controlData.setCellValue(detail.getProduct().getName());
+                controlData.setCellValue(detail.getProduct());
 
                 controlData = reportDataRow.createCell(3);
                 controlData.setCellValue(detail.getWorkedHours());

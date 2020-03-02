@@ -23,6 +23,47 @@
 
     <section class="content">
         <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="box box-warning box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Choose month</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="input-group input-group-sm">
+                            <label>
+                                <select name="month" class="form-control" id="selected-month">
+                                    <option value="NULL" selected>-- Select month for showing statistics --</option>
+                                    <option value="JANUARY">January</option>
+                                    <option value="FEBRUARY">February</option>
+                                    <option value="MARCH">March</option>
+                                    <option value="APRIL">April</option>
+                                    <option value="MAY">May</option>
+                                    <option value="JUNE">June</option>
+                                    <option value="JULY">July</option>
+                                    <option value="AUGUST">August</option>
+                                    <option value="SEPTEMBER">September</option>
+                                    <option value="OCTOBER">October</option>
+                                    <option value="NOVEMBER">November</option>
+                                    <option value="DECEMBER">December</option>
+                                </select>
+                            </label>
+                            <span class="input-group-btn">
+                                <a type="button" class="btn btn-success btn-flat" id="filter-link" href="#">Show</a>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
                     <span class="info-box-icon bg-green"><i class="ion ion-android-bicycle"></i></span>
@@ -250,6 +291,12 @@
         barChartOptions.datasetFill = false;
         barChart.Bar(barChartData, barChartOptions)
     });
+</script>
+
+<script>
+    document.getElementById('selected-month').onchange = function () {
+        document.getElementById('filter-link').href = "/filter/" + document.getElementById("selected-month").value
+    }
 </script>
 
 </body>
