@@ -5,17 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import uz.pc.collections.DetailedSalary;
 import uz.pc.collections.Filter;
 import uz.pc.collections.SalaryCollection;
-import uz.pc.collections.DetailedSalary;
 import uz.pc.db.dao.interfaces.EmployeeDAO;
 import uz.pc.db.entities.Employee;
-import uz.pc.db.entities.Performer;
-import uz.pc.db.entities.Production;
 import uz.pc.db.repos.EmployeeRepository;
-import uz.pc.db.repos.PerformerRepository;
-import uz.pc.db.repos.ProductRepository;
-import uz.pc.db.repos.ProductionRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -54,7 +49,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<SalaryCollection> getSalariesInformation(Filter filter) {
         List<SalaryCollection> fullCollection = new ArrayList<>();
 
-        String GET_DATA = String.format("SELECT de.id, de.firstName, de.secondName, prod.date, prod.reference, d.name, pr.experience, pr.workedHours, pr.salary FROM Performer pr INNER JOIN Employee de on pr.employeeId = de.id INNER JOIN Production prod on pr.productionId = prod.id INNER JOIN Product d ON d.id = prod.productId WHERE prod.date BETWEEN '%s' AND '%s' ORDER BY de.id DESC", filter.getStart(), filter.getEnd());
+        String GET_DATA = String.format("SELECT de.id, de.firstName, de.secondName, prod.date, prod.reference, d.name, pr.experience, pr.workedHours, pr.salary " +
+                "FROM Performer pr " +
+                "INNER JOIN Employee de on pr.employeeId = de.id " +
+                "INNER JOIN Production prod on pr.productionId = prod.id " +
+                "INNER JOIN Product d ON d.id = prod.productId " +
+                "WHERE prod.date " +
+                "BETWEEN '%s' AND '%s' ORDER BY de.id DESC", filter.getStart(), filter.getEnd());
         Query query = em.createQuery(GET_DATA);
 
         List<Object[]> resultSet = query.getResultList();

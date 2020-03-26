@@ -1,6 +1,7 @@
 package uz.pc.controllers;
 
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,13 +13,13 @@ import uz.pc.db.dao.interfaces.EmployeeDAO;
 import uz.pc.services.XLSHandlerService;
 
 import javax.validation.Valid;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @RestController
 @RequestMapping("/salaries")
@@ -54,7 +55,7 @@ public class SalariesController {
         }
 
         HttpHeaders header = new HttpHeaders();
-        header.setContentType(new MediaType("application", "force-download"));
+        header.setContentType(MediaType.valueOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
         header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=segmented.xlsx");
         System.out.println("reached");
         System.out.println(res);
@@ -63,30 +64,37 @@ public class SalariesController {
     }
 
     @RequestMapping(value = "/save-overall", method = RequestMethod.POST)
-    public ResponseEntity<ByteArrayResource> saveOverallToFile(@Valid @RequestBody Filter filter) {
+    public ResponseEntity<InputStreamResource> saveOverallToFile(@Valid @RequestBody Filter filter) throws IOException {
         List<SalaryCollection> collection = dao.getSalariesInformation(filter);
         XLSHandlerService xls = new XLSHandlerService(collection, filter.getStart(), filter.getEnd());
 
         xls.createXls(false);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
-        File file2Upload = new File("overall.xlsx");
-        Path path = Paths.get(file2Upload.getAbsolutePath());
-
-        ByteArrayResource res = null;
-        try {
-            res = new ByteArrayResource(Files.readAllBytes(path));
-        } catch (IOException e) {
-            e.printStackTrace();
+        FileOutputStream fos = new FileOutputStream("compressed-overall.zip");
+        ZipOutputStream zipOut = new ZipOutputStream(fos);
+        File fileToZip = new File("overall.xlsx");
+        FileInputStream fis = new FileInputStream(fileToZip);
+        ZipEntry zipEntry = new ZipEntry(fileToZip.getName());
+        zipOut.putNextEntry(zipEntry);
+        byte[] bytes = new byte[1024];
+        int length;
+        while((length = fis.read(bytes)) >= 0) {
+            zipOut.write(bytes, 0, length);
         }
+        zipOut.close();
+        fis.close();
+        fos.close();
+
+        File file2Upload = new File("compressed-overall.zip");
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file2Upload));
 
         HttpHeaders header = new HttpHeaders();
-        header.setContentType(new MediaType("application", "force-download"));
-        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=overall.xlsx");
-        System.out.println("reached");
-        System.out.println(res);
-        return new ResponseEntity<>(res,
-                header, HttpStatus.OK);
+        header.setContentType(MediaType.valueOf("application/zip"));
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=compressed-overall.zip");
+
+        return ResponseEntity.ok()
+                .headers(header)
+                .body(resource);
     }
 
 }

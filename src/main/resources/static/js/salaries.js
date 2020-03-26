@@ -55,10 +55,12 @@ app.controller('SalaryController', function ($scope, $http) {
             url: "/salaries/save-overall",
             data: $scope.filter
         }).then(function (response) {
-            let blob = new Blob([response.data], {
-                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            });
-            saveAs(blob, 'segmented' + '.xlsx');
+            const downloader = document.createElement('a');
+            downloader.download = 'compressed-overall.zip';
+            const blob = new Blob([response.data], {type: 'application/zip'});
+            downloader.href = window.URL.createObjectURL(blob);
+
+            downloader.click();
         });
     };
 

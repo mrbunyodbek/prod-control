@@ -1,1 +1,0 @@
-INSERT INTO public.db_settings (id, created_at, updated_at, end_of_day, start_of_day) VALUES (1, null, null, '18:00:00', '08:00:00');
