@@ -1,6 +1,6 @@
 package uz.pc.db.dao.interfaces;
 
-import uz.pc.collections.PerformerRow;
+import uz.pc.db.dto.production.PerformerRow;
 import uz.pc.db.entities.Performer;
 
 import java.util.List;

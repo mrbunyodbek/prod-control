@@ -1,4 +1,4 @@
-package uz.pc.collections;
+package uz.pc.db.dto.attendance;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AttendanceDetails {
+public class DetailsDTO {
 
     private LocalDateTime arrivalTime;
     private LocalDateTime departureTime;

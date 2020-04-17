@@ -1,9 +1,9 @@
 package uz.pc.db.dao.interfaces;
 
-import uz.pc.collections.Statistics;
+import uz.pc.db.dto.StatisticsDTO;
 
 public interface DashboardDAO {
 
-    Statistics collectStatsForProduction(String month);
+    StatisticsDTO collectStatsForProduction(String month);
 
 }

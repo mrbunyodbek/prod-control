@@ -1,18 +1,18 @@
-package uz.pc.collections;
+package uz.pc.db.dto.attendance;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * AttendanceWithDate class will be used for collecting information
+ * DateWithDetailsDTO class will be used for collecting information
  * about particular working date.
  */
-public class AttendanceWithDate {
+public class DateWithDetailsDTO {
 
     private int date;
-    private List<AttendanceDetails> details;
+    private List<DetailsDTO> details;
 
-    public AttendanceWithDate(int date) {
+    public DateWithDetailsDTO(int date) {
         this.date = date;
         this.details = new ArrayList<>();
     }
@@ -25,11 +25,11 @@ public class AttendanceWithDate {
         this.date = date;
     }
 
-    public List<AttendanceDetails> getDetails() {
+    public List<DetailsDTO> getDetails() {
         return details;
     }
 
-    public void setDetails(AttendanceDetails details) {
+    public void setDetails(DetailsDTO details) {
         this.details.add(details);
     }
 }

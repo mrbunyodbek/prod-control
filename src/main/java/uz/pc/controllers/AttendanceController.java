@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pc.collections.EmployeeAndAttendance;
+import uz.pc.db.dto.attendance.AttendanceDTO;
 import uz.pc.db.dao.interfaces.AttendanceDAO;
-import uz.pc.db.entities.Employee;
 
 import java.util.List;
 
@@ -23,19 +22,12 @@ public class AttendanceController {
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public ResponseEntity<List<EmployeeAndAttendance>> getAll() {
-        return new ResponseEntity<>(attendanceDAO.getAllAttendancesByEmployees(null), HttpStatus.OK);
+    public ResponseEntity<List<AttendanceDTO>> getAll() {
+        return new ResponseEntity<>(attendanceDAO.collectAllAttendancesForMonth(null), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/get/{month}", method = RequestMethod.GET)
-    public ResponseEntity<List<EmployeeAndAttendance>> getAllByMonth(@PathVariable String month) {
-        return new ResponseEntity<>(attendanceDAO.getAllAttendancesByEmployees(month.toUpperCase()), HttpStatus.OK);
+    public ResponseEntity<List<AttendanceDTO>> getAllByMonth(@PathVariable String month) {
+        return new ResponseEntity<>(attendanceDAO.collectAllAttendancesForMonth(month.toUpperCase()), HttpStatus.OK);
     }
-
-    @RequestMapping(value = "/get/by-employee/{employeeId}", method = RequestMethod.GET)
-    public ResponseEntity<EmployeeAndAttendance> getAllByEmployeeAndMonth(
-            @PathVariable int employeeId) {
-        return new ResponseEntity<>(attendanceDAO.getAllAttendanceForOneEmployee(employeeId), HttpStatus.OK);
-    }
-
 }

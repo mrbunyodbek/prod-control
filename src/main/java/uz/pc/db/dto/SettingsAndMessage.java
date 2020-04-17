@@ -1,4 +1,4 @@
-package uz.pc.collections;
+package uz.pc.db.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package uz.pc.collections;
+package uz.pc.db.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SavedProduction {
+public class ProductionDTO {
 
     private Production production;
     private List<Performer> performers;

@@ -1,4 +1,4 @@
-package uz.pc.collections;
+package uz.pc.db.dto.salary;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,13 +11,13 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SalaryCollection {
+public class SalariesDTO {
 
     private Employee employee;
-    private List<DetailedSalary> details = new ArrayList<>();
+    private List<SalaryDetailDTO> details = new ArrayList<>();
     private double overallSalary = 0;
 
-    public void setOneDetail(DetailedSalary detail) {
+    public void setOneDetail(SalaryDetailDTO detail) {
         this.details.add(detail);
         this.overallSalary += detail.getSalary();
     }

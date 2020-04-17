@@ -1,8 +1,9 @@
-package uz.pc.collections;
+package uz.pc.db.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.pc.db.dto.production.ProductionWithPerformers;
 import uz.pc.db.entities.Employee;
 import uz.pc.db.entities.Product;
 

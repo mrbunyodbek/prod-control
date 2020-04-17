@@ -1,4 +1,4 @@
-package uz.pc.collections;
+package uz.pc.db.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.Hashtable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Statistics {
+public class StatisticsDTO {
 
     Hashtable<String, Integer> costByProduct;
     Hashtable<String, Integer> amountByProduct;

@@ -1,16 +1,15 @@
-package uz.pc.collections;
+package uz.pc.db.dto.salary;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.pc.db.entities.Product;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class DetailedSalary {
+public class SalaryDetailDTO {
 
     private int productionId;
     private LocalDateTime productionDate;

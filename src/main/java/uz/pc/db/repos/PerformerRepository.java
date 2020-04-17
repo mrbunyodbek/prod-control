@@ -9,8 +9,6 @@ public interface PerformerRepository extends JpaRepository<Performer, Integer> {
 
     Performer getById(int id);
     List<Performer> findAllByProductionId(int id);
-    List<Performer> findAllByEmployeeId(int id);
-    Performer findByProductionIdAndEmployeeId(int productionId, int employeeId);
     void deleteAllByProductionId(int id);
 
 }

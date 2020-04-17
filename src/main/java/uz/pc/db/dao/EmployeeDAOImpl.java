@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import uz.pc.collections.DetailedSalary;
-import uz.pc.collections.Filter;
-import uz.pc.collections.SalaryCollection;
+import uz.pc.db.dto.salary.SalaryDetailDTO;
+import uz.pc.db.dto.Filter;
+import uz.pc.db.dto.salary.SalariesDTO;
 import uz.pc.db.dao.interfaces.EmployeeDAO;
 import uz.pc.db.entities.Employee;
 import uz.pc.db.repos.EmployeeRepository;
@@ -46,8 +46,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
      */
     @Override
     @Transactional
-    public List<SalaryCollection> getSalariesInformation(Filter filter) {
-        List<SalaryCollection> fullCollection = new ArrayList<>();
+    public List<SalariesDTO> getSalariesInformation(Filter filter) {
+        List<SalariesDTO> fullCollection = new ArrayList<>();
 
         String GET_DATA = String.format("SELECT de.id, de.firstName, de.secondName, prod.date, prod.reference, d.name, pr.experience, pr.workedHours, pr.salary " +
                 "FROM Performer pr " +
@@ -64,7 +64,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         if (resultSet.size() > 0) {
             for (Object[] obj : resultSet) {
                 if ((int) obj[0] != currentId) {
-                    SalaryCollection collection = new SalaryCollection();
+                    SalariesDTO collection = new SalariesDTO();
                     currentId = (int) obj[0];
 
                     Employee employee = new Employee();
@@ -129,8 +129,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         repository.deleteById(id);
     }
 
-    private DetailedSalary populateDetailedSalary(Object[] obj) {
-        DetailedSalary detail = new DetailedSalary();
+    private SalaryDetailDTO populateDetailedSalary(Object[] obj) {
+        SalaryDetailDTO detail = new SalaryDetailDTO();
         detail.setProductionDate((LocalDateTime) obj[3]);
         detail.setProductionReference((String) obj[4]);
         detail.setProduct((String) obj[5]);

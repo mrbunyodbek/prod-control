@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.AopInvocationException;
 import org.springframework.stereotype.Service;
-import uz.pc.collections.Statistics;
+import uz.pc.db.dto.StatisticsDTO;
 import uz.pc.db.dao.interfaces.DashboardDAO;
 import uz.pc.db.entities.Product;
 import uz.pc.db.repos.EmployeeRepository;
@@ -31,11 +31,11 @@ public class DashboardDAOImpl implements DashboardDAO {
     }
 
     @Override
-    public Statistics collectStatsForProduction(String month) {
+    public StatisticsDTO collectStatsForProduction(String month) {
         LocalDateTime thisTime = LocalDateTime.now();
 
         List<Product> productList = productRepository.findAll();
-        Statistics statistics = new Statistics();
+        StatisticsDTO statistics = new StatisticsDTO();
         Hashtable<String, Integer> prods = new Hashtable<>();
         Hashtable<String, Integer> amounts = new Hashtable<>();
 

@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uz.pc.collections.Filter;
-import uz.pc.collections.SalaryCollection;
+import uz.pc.db.dto.Filter;
+import uz.pc.db.dto.salary.SalariesDTO;
 import uz.pc.db.dao.interfaces.EmployeeDAO;
 import uz.pc.services.XLSHandlerService;
 
@@ -33,13 +33,13 @@ public class SalariesController {
     }
 
     @RequestMapping(value = "/filter", method = RequestMethod.POST)
-    public ResponseEntity<List<SalaryCollection>> getFiltered(@Valid @RequestBody Filter filter) {
+    public ResponseEntity<List<SalariesDTO>> getFiltered(@Valid @RequestBody Filter filter) {
         return new ResponseEntity<>(dao.getSalariesInformation(filter), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/save-to-file", method = RequestMethod.POST)
     public ResponseEntity<ByteArrayResource> saveToFile(@Valid @RequestBody Filter filter) {
-        List<SalaryCollection> collection = dao.getSalariesInformation(filter);
+        List<SalariesDTO> collection = dao.getSalariesInformation(filter);
         XLSHandlerService xls = new XLSHandlerService(collection, filter.getStart(), filter.getEnd());
 
         xls.createXls(true);
@@ -65,7 +65,7 @@ public class SalariesController {
 
     @RequestMapping(value = "/save-overall", method = RequestMethod.POST)
     public ResponseEntity<InputStreamResource> saveOverallToFile(@Valid @RequestBody Filter filter) throws IOException {
-        List<SalaryCollection> collection = dao.getSalariesInformation(filter);
+        List<SalariesDTO> collection = dao.getSalariesInformation(filter);
         XLSHandlerService xls = new XLSHandlerService(collection, filter.getStart(), filter.getEnd());
 
         xls.createXls(false);

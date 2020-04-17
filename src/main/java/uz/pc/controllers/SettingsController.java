@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pc.collections.SettingsAndMessage;
+import uz.pc.db.dto.SettingsAndMessage;
 import uz.pc.db.dao.interfaces.SettingsDAO;
 import uz.pc.db.entities.Settings;
 

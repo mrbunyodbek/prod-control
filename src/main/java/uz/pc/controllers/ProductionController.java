@@ -3,10 +3,10 @@ package uz.pc.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uz.pc.collections.DataCollection;
-import uz.pc.collections.PagedProduction;
-import uz.pc.collections.ProductionWithPerformers;
-import uz.pc.collections.SavedProduction;
+import uz.pc.db.dto.DataCollection;
+import uz.pc.db.dto.production.ProductionPageDTO;
+import uz.pc.db.dto.production.ProductionWithPerformers;
+import uz.pc.db.dto.ProductionDTO;
 import uz.pc.db.dao.interfaces.EmployeeDAO;
 import uz.pc.db.dao.interfaces.ProductDAO;
 import uz.pc.db.dao.interfaces.ProductionDAO;
@@ -47,7 +47,7 @@ public class ProductionController {
      * @return JSON list of all Productions.
      */
     @RequestMapping(value = "/get/{pageNo}/{sizeOfThePage}/{sortingDirection}", method = RequestMethod.GET)
-    public ResponseEntity<PagedProduction> getPaginatedProductions(
+    public ResponseEntity<ProductionPageDTO> getPaginatedProductions(
             @PathVariable int pageNo, @PathVariable int sizeOfThePage, @PathVariable boolean sortingDirection
     ) {
         return new ResponseEntity<>(dao.getPaginatedProductions(pageNo, sizeOfThePage, sortingDirection), HttpStatus.OK);
@@ -69,7 +69,7 @@ public class ProductionController {
      * @param collection JSON data from front-end.
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public HttpStatus saveNewProduction(@Valid @RequestBody SavedProduction collection) {
+    public HttpStatus saveNewProduction(@Valid @RequestBody ProductionDTO collection) {
         dao.saveProduction(collection);
         return HttpStatus.OK;
     }

@@ -1,18 +1,14 @@
-package uz.pc.collections;
+package uz.pc.db.dto.attendance;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import uz.pc.db.entities.Employee;
 
-public class EmployeeAndAttendance {
+public class AttendanceDTO {
 
     private Employee employee;
-    private AttendanceWithDate[] attendanceList;
+    private DateWithDetailsDTO[] attendanceList;
     private int overallHours;
 
-    public EmployeeAndAttendance() {
+    public AttendanceDTO() {
         this.overallHours = 0;
     }
 
@@ -24,11 +20,11 @@ public class EmployeeAndAttendance {
         this.employee = employee;
     }
 
-    public AttendanceWithDate[] getAttendanceList() {
+    public DateWithDetailsDTO[] getAttendanceList() {
         return attendanceList;
     }
 
-    public void setAttendanceList(AttendanceWithDate[] attendanceList) {
+    public void setAttendanceList(DateWithDetailsDTO[] attendanceList) {
         this.attendanceList = attendanceList;
     }
 

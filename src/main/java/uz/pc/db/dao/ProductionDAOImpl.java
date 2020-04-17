@@ -4,9 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import uz.pc.collections.PagedProduction;
-import uz.pc.collections.ProductionWithPerformers;
-import uz.pc.collections.SavedProduction;
+import uz.pc.db.dto.production.ProductionPageDTO;
+import uz.pc.db.dto.production.ProductionWithPerformers;
+import uz.pc.db.dto.ProductionDTO;
 import uz.pc.db.dao.interfaces.PerformerDAO;
 import uz.pc.db.dao.interfaces.ProductDAO;
 import uz.pc.db.dao.interfaces.ProductionDAO;
@@ -37,7 +37,7 @@ public class ProductionDAOImpl implements ProductionDAO {
     }
 
     @Override
-    public PagedProduction getPaginatedProductions(int pageNo, int sizeOfThePage, boolean sortingDirection) {
+    public ProductionPageDTO getPaginatedProductions(int pageNo, int sizeOfThePage, boolean sortingDirection) {
         List<ProductionWithPerformers> collection = new ArrayList<>();
         Page<Production> pagedProductions;
         if (sortingDirection) {
@@ -59,7 +59,7 @@ public class ProductionDAOImpl implements ProductionDAO {
             collection.add(one);
         });
 
-        PagedProduction pagedProduction = new PagedProduction();
+        ProductionPageDTO pagedProduction = new ProductionPageDTO();
         pagedProduction.setPwp(collection);
         pagedProduction.setCurrentPage(pagedProductions.getNumber());
         pagedProduction.setCountOfItems(pagedProductions.getSize());
@@ -99,7 +99,7 @@ public class ProductionDAOImpl implements ProductionDAO {
      * @param production Object collected from front-end.
      */
     @Override
-    public void saveProduction(SavedProduction production) {
+    public void saveProduction(ProductionDTO production) {
         production.getProduction().setDate(production.getProduction().getDate().withHour(15));
 //        production.getProduction().setDate(production.getProduction().getDate().withMinute(0));
 //        production.getProduction().setDate(production.getProduction().getDate().withSecond(0));

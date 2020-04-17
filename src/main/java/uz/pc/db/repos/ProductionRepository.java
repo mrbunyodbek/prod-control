@@ -26,7 +26,4 @@ public interface ProductionRepository extends JpaRepository<Production, Integer>
     @Query("SELECT sum(p.cost) FROM Production p WHERE p.month = :month AND p.year = :year")
     int calculateFullCostOfProductions(String month, Integer year);
 
-//    @Query("SELECT sum(p.cost) FROM Production p WHERE p.date BETWEEN :start AND :end")
-//    int totalProductionBetweenDates(LocalDateTime start, LocalDateTime end);
-
 }

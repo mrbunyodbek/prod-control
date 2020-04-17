@@ -1,7 +1,7 @@
 package uz.pc.db.dao;
 
 import org.springframework.stereotype.Service;
-import uz.pc.collections.PerformerRow;
+import uz.pc.db.dto.production.PerformerRow;
 import uz.pc.db.dao.interfaces.PerformerDAO;
 import uz.pc.db.entities.Employee;
 import uz.pc.db.entities.Performer;

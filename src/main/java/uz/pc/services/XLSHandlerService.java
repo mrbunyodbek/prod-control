@@ -3,8 +3,8 @@ package uz.pc.services;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import uz.pc.collections.SalaryCollection;
-import uz.pc.collections.DetailedSalary;
+import uz.pc.db.dto.salary.SalariesDTO;
+import uz.pc.db.dto.salary.SalaryDetailDTO;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,11 +16,11 @@ import java.util.List;
 
 public class XLSHandlerService {
 
-    private List<SalaryCollection> collections;
+    private List<SalariesDTO> collections;
     private LocalDateTime start;
     private LocalDateTime end;
 
-    public XLSHandlerService(List<SalaryCollection> collections, LocalDateTime start, LocalDateTime end) {
+    public XLSHandlerService(List<SalariesDTO> collections, LocalDateTime start, LocalDateTime end) {
         this.collections = collections;
         this.start = start;
         this.end = end;
@@ -44,7 +44,7 @@ public class XLSHandlerService {
     }
 
     private void writeDataToExcel(Workbook workbook, CellStyle heads) {
-        for (SalaryCollection item : collections) {
+        for (SalariesDTO item : collections) {
             if (item.getDetails().isEmpty()) {
                 continue;
             }
@@ -98,7 +98,7 @@ public class XLSHandlerService {
             int rowReportIterator = 6;
             Row reportDataRow;
             Cell reportDataCell;
-            for (DetailedSalary detail : item.getDetails()) {
+            for (SalaryDetailDTO detail : item.getDetails()) {
                 reportDataRow = sheet.createRow(rowReportIterator);
 
                 reportDataCell = reportDataRow.createCell(0);
@@ -152,7 +152,7 @@ public class XLSHandlerService {
         int groupStart = 0;
         int groupEnd = 0;
 
-        for (SalaryCollection item : collections) {
+        for (SalariesDTO item : collections) {
             if (item.getDetails().isEmpty()) {
                 continue;
             }
@@ -170,7 +170,7 @@ public class XLSHandlerService {
             ++rowIterator;
             groupStart = rowIterator;
 
-            for (DetailedSalary detail : item.getDetails()) {
+            for (SalaryDetailDTO detail : item.getDetails()) {
 
                 reportDataRow = sheet.createRow(rowIterator);
 
